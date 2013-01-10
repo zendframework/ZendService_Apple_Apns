@@ -1,0 +1,29 @@
+{
+    "name": "zendframework/zendservice-apple",
+    "description": "OOP wrapper for Apple Push Notification Service",
+    "type": "library",
+    "keywords": [
+        "zf2",
+        "apns",
+        "push",
+        "notification",
+        "apple"
+    ],
+    "homepage": "http://packages.zendframework.com/",
+    "license": "BSD-3-Clause",
+    "autoload": {
+        "psr-0": {
+            "ZendService": "library/"
+        }
+    },
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "http://packages.zendframework.com/"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.3",
+        "zendframework/zend-json": ">=2.0.0"
+    }
+}
