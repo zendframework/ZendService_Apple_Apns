@@ -12,10 +12,11 @@
 
 namespace ZendServiceTest\Apple\Apns\TestAsset;
 
+use ZendService\Apple\Apns\Exception;
 use ZendService\Apple\Apns\Client\Message as ZfMessageClient;
 
 /**
- * Apns Test Proxy
+ * Message Client Proxy
  * This class is utilized for unit testing purposes
  *
  * @category   ZendService
@@ -42,7 +43,7 @@ class MessageClient extends ZfMessageClient
      * Set the Response
      *
      * @param string $str
-     * @return AbstractProxyClient
+     * @return MessageClient
      */
     public function setReadResponse($str) {
         $this->readResponse = $str;
@@ -53,7 +54,7 @@ class MessageClient extends ZfMessageClient
      * Set the write response
      *
      * @param mixed $resp
-     * @return AbstractProxyClient
+     * @return MessageClient
      */
     public function setWriteResponse($resp)
     {
@@ -64,7 +65,7 @@ class MessageClient extends ZfMessageClient
     /**
      * Connect to Host
      *
-     * @return AbstractProxyClient
+     * @return MessageClient
      */
     protected function connect($host, array $ssl)
     {

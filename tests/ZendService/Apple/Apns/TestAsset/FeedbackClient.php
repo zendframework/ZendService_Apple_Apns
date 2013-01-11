@@ -12,10 +12,11 @@
 
 namespace ZendServiceTest\Apple\Apns\TestAsset;
 
-use ZendService\Apple\Apns\Client\FeedbackClient as ZfFeedbackClient;
+use ZendService\Apple\Apns\Exception;
+use ZendService\Apple\Apns\Client\Feedback as ZfFeedbackClient;
 
 /**
- * Apns Test Proxy
+ * Feedback Client Proxy
  * This class is utilized for unit testing purposes
  *
  * @category   ZendService
@@ -42,7 +43,7 @@ class FeedbackClient extends ZfFeedbackClient
      * Set the Response
      *
      * @param string $str
-     * @return AbstractProxyClient
+     * @return FeedbackClient
      */
     public function setReadResponse($str) {
         $this->readResponse = $str;
@@ -53,7 +54,7 @@ class FeedbackClient extends ZfFeedbackClient
      * Set the write response
      *
      * @param mixed $resp
-     * @return AbstractProxyClient
+     * @return FeedbackClient
      */
     public function setWriteResponse($resp)
     {
@@ -62,13 +63,12 @@ class FeedbackClient extends ZfFeedbackClient
     }
 
     /**
-     * Open Connection
+     * Connect to Host
      *
-     * @return AbstractProxyClient
+     * @return FeedbackClient
      */
-    protected function open($environment, $certificate, $passPhrase = null)
+    protected function connect($host, array $ssl)
     {
-        $this->isConnected = true;
         return $this;
     }
 

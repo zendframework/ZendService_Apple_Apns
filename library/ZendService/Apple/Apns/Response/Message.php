@@ -15,9 +15,7 @@ namespace ZendService\Apple\Apns\Response;
 use ZendService\Apple\Exception;
 
 /**
- * Apple Push Notification Client
- * This class allows the ability to send out
- * messages through apple push notification service
+ * Message Response
  *
  * @category   ZendService
  * @package    ZendService_Apple

@@ -17,9 +17,7 @@ use ZendService\Apple\Apns\Message as ApnsMessage;
 use ZendService\Apple\Apns\Response\Message as MessageResponse;
 
 /**
- * Apple Push Notification Client
- * This class allows the ability to send out
- * messages through apple push notification service
+ * Message Client
  *
  * @category   ZendService
  * @package    ZendService_Apple

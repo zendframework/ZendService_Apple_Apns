@@ -1,6 +1,6 @@
 <phpunit bootstrap="./Bootstrap.php" colors="true">
     <testsuites>
-        <testsuite name="ZendService Apple Test Suite">
+        <testsuite name="ZendService Apple Apns Test Suite">
             <directory>./ZendService</directory>
         </testsuite>
     </testsuites>

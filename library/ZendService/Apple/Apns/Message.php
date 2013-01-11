@@ -16,9 +16,7 @@ use ZendService\Apple\Exception;
 use Zend\Json\Json;
 
 /**
- * Apple Push Notification Client
- * This class allows the ability to send out
- * messages through apple push notification service
+ * APNs Message
  *
  * @category   ZendService
  * @package    ZendService_Apple

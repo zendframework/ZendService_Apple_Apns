@@ -15,9 +15,7 @@ namespace ZendService\Apple\Apns\Response;
 use ZendService\Apple\Exception;
 
 /**
- * Apple Push Notification Client
- * This class allows the ability to send out
- * messages through apple push notification service
+ * Feedback Response
  *
  * @category   ZendService
  * @package    ZendService_Apple
@@ -103,13 +101,11 @@ class Feedback
      */
     public function parseRawResponse($rawResponse)
     {
-       if (strlen($rawResponse) < 38) {
-            throw new Exception\RuntimeException('Response was of invalid length');
-       }
-       $token = unpack('Ntime/ntokenLength/H*token', $token);
-       $this->setTime($token['time']);
-       $this->setToken($token['token']);
-       return $this;
+        $rawResponse = trim($rawResponse);
+        $token = unpack('Ntime/ntokenLength/H*token', $rawResponse);
+        $this->setTime($token['time']);
+        $this->setToken($token['token']);
+        return $this;
     }
 
 }

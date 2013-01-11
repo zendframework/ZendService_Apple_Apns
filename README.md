@@ -1,4 +1,4 @@
-ZendService\Apple component
+ZendService\Apple\Apns component
 
 You can install using:
 

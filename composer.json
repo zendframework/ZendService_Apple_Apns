@@ -1,5 +1,5 @@
 {
-    "name": "zendframework/zendservice-apple",
+    "name": "zendframework/zendservice-apple-apns",
     "description": "OOP wrapper for Apple Push Notification Service",
     "type": "library",
     "keywords": [

@@ -16,9 +16,7 @@ use ZendService\Apple\Exception;
 use ZendService\Apple\Apns\Response\Feedback as FeedbackResponse;
 
 /**
- * Apple Push Notification Client
- * This class allows the ability to send out
- * messages through apple push notification service
+ * Feedback Client
  *
  * @category   ZendService
  * @package    ZendService_Apple
@@ -40,7 +38,7 @@ class Feedback extends AbstractClient
      *
      * @return array of ZendService\Apple\Apns\Response\Feedback
      */
-    public function getFeedback()
+    public function feedback()
     {
         if (!$this->isConnected()) {
             throw new Exception\RuntimeException('You must first open the connection by calling open()');
@@ -48,9 +46,6 @@ class Feedback extends AbstractClient
 
         $tokens = array();
         while ($token = $this->read(38)) {
-            if (strlen($token) < 38) {
-                continue;
-            }
             $tokens[] = new FeedbackResponse($token);
         }   
         return $tokens;
