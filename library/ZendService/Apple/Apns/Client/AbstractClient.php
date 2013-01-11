@@ -24,6 +24,13 @@ use ZendService\Apple\Exception;
 abstract class AbstractClient
 {
     /**
+     * APNS URI Constants
+     * @var int
+     */
+    const SANDBOX_URI = 0;
+    const PRODUCTION_URI = 1;
+
+    /**
      * APNS URIs
      * @var array
      */
@@ -53,22 +60,38 @@ abstract class AbstractClient
         }
 
         if (!array_key_exists($environment, $this->uris)) {
-            throw new Exception\InvalidArgumentException('$env is invalid and must be a Client constant.');
+            throw new Exception\InvalidArgumentException('Environment must be one of PRODUCTION_URI or SANDBOX_URI');
         }
 
         if (!is_string($certificate) || !file_exists($certificate)) {
-            throw new Exception\InvalidArgumentException('$certificate must be a file path to the certificate');
+            throw new Exception\InvalidArgumentException('SSL Certificate file path invalid');
         }
 
         $sslOptions = array(
-            'local_cert' => $this->certificate,
+            'local_cert' => $certificate,
         );
-        if ($passPhrase) {
+        if ($passPhrase !== null) {
+            if (!is_scalar($passPhrase)) {
+                throw new Exception\InvalidArgumentException('SSL passphrase must be a scalar');
+            }
             $sslOptions['passphrase'] = $passPhrase;
         }
+        $this->connect($this->uris[$environment], $sslOptions);
+        $this->isConnected = true;
+        return $this;
+    }
 
+    /**
+     * Connect to Host
+     *
+     * @param string $host
+     * @param array  $ssl
+     * @return AbstractClient
+     */
+    protected function connect($host, array $ssl)
+    {
         $this->socket = stream_socket_client(
-            $this->uris[$environment],
+            $host,
             $errno,
             $errstr,
             ini_get('socket_timeout'),
@@ -81,16 +104,14 @@ abstract class AbstractClient
         if (!$this->socket) {
             throw new Exception\RuntimeException(sprintf(
                 'Unable to connect: %s: %d (%s)',
-                $this->uris[$environment],
+                $host,
                 $errno,
                 $errstr
             ));
         }
-
         stream_set_blocking($this->socket, 0);
         stream_set_write_buffer($this->socket, 0);
-        $this->isConnected = true;
-        return $this;
+        return $this; 
     }
 
     /**
@@ -100,7 +121,7 @@ abstract class AbstractClient
      */
     public function close()
     {
-        if ($this->isConnected) {
+        if ($this->isConnected && is_resource($this->socket)) {
             fclose($this->socket);
         }
         $this->isConnected = false;
@@ -114,7 +135,7 @@ abstract class AbstractClient
      */
     public function isConnected()
     {
-        return $this->isConnected();
+        return $this->isConnected;
     }
 
     /**

@@ -27,13 +27,6 @@ use ZendService\Apple\Apns\Response\Feedback as FeedbackResponse;
 class Feedback extends AbstractClient
 {
     /**
-     * APNS URI Constants
-     * @var int
-     */
-    const SANDBOX_URI = 0;
-    const PRODUCTION_URI = 1;
-
-    /**
      * APNS URIs
      * @var array
      */

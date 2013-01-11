@@ -138,7 +138,7 @@ class Message
     {
         if ($expire instanceof \DateTime) {
             $expire = $expire->getTimestamp();
-        } else if ($expire != (int) $expire) {
+        } else if (!is_numeric($expire) || $expire != (int) $expire) {
             throw new Exception\InvalidArgumentException('Expiration must be a DateTime object or a unix timestamp');
         }
         $this->expire = $expire;
@@ -272,7 +272,7 @@ class Message
      */
     public function getPayloadJson()
     {
-        $payload = $message->getPayload();
+        $payload = $this->getPayload();
         // don't escape utf8 payloads unless json_encode does not exist.
         if (defined('JSON_UNESCAPED_UNICODE') && function_exists('mb_strlen')) {
             $payload = json_encode($payload, JSON_UNESCAPED_UNICODE);

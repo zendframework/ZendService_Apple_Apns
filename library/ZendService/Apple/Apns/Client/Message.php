@@ -25,15 +25,8 @@ use ZendService\Apple\Apns\Response\Message as MessageResponse;
  * @package    ZendService_Apple
  * @subpackage Apns
  */
-class Message
+class Message extends AbstractClient
 {
-    /**
-     * APNS URI Constants
-     * @var int
-     */
-    const SANDBOX_URI = 0;
-    const PRODUCTION_URI = 1;
-
     /**
      * APNS URIs
      * @var array
@@ -49,7 +42,7 @@ class Message
      * @param ZendService\Apple\Apns\Message $message
      * @return ZendService\Apple\Apns\Response\Message
      */
-    public function sendMessage(ApnsMessage $message)
+    public function send(ApnsMessage $message)
     {
         if (!$this->isConnected()) {
             throw new Exception\RuntimeException('You must first open the connection by calling open()');

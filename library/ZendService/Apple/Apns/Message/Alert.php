@@ -67,19 +67,19 @@ class Alert
      */
     public function __construct($body = null, $actionLocKey = null, $locKey = null, $locArgs = null, $launchImage = null)
     {
-        if ($body) {
+        if ($body !== null) {
             $this->setBody($body);
         }
-        if ($actionLocKey) {
+        if ($actionLocKey !== null) {
             $this->setActionLocKey($actionLocKey);
         }
-        if ($locKey) {
+        if ($locKey !== null) {
             $this->setLocKey($locKey);
         }
-        if ($locArgs) {
+        if ($locArgs !== null) {
             $this->setLocArgs();
         }
-        if ($launchImage) {
+        if ($launchImage !== null) {
             $this->setLaunchImage($launchImage);
         }
     }
@@ -102,7 +102,7 @@ class Alert
      */
     public function setBody($body)
     {
-        if (!is_null($body) || !is_scalar($body)) {
+        if (!is_null($body) && !is_scalar($body)) {
             throw new Exception\InvalidArgumentException('Body must be null OR a scalar value');
         }
         $this->body = $body;
@@ -127,7 +127,7 @@ class Alert
      */
     public function setActionLocKey($key)
     {
-        if (!is_null($key) || !is_scalar($key)) {
+        if (!is_null($key) && !is_scalar($key)) {
             throw new Exception\InvalidArgumentException('ActionLocKey must be null OR a scalar value');
         }
         $this->actionLocKey = $key;
@@ -152,7 +152,7 @@ class Alert
      */
     public function setLocKey($key)
     {
-        if (!is_null($key) || !is_scalar($key)) {
+        if (!is_null($key) && !is_scalar($key)) {
             throw new Exception\InvalidArgumentException('LocKey must be null OR a scalar value');
         }
         $this->locKey = $key;
@@ -206,7 +206,7 @@ class Alert
      */
     public function setLaunchImage($image)
     {
-        if (!is_null($image) || !is_scalar($image)) {
+        if (!is_null($image) && !is_scalar($image)) {
             throw new Exception\InvalidArgumentException('Launch image must be null OR a scalar value');
         }
         $this->launchImage =  $image;

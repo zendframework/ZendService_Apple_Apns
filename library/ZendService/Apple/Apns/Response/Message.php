@@ -127,11 +127,11 @@ class Message
             throw new Exception\InvalidArgumentException('Response must be a scalar value');
         }
 
-        if (strlen($responseStr) === 0) {
+        if (strlen($rawResponse) === 0) {
             $this->code = self::RESULT_OK;
             return $this;
         }
-        $response = unpack('Ccmd/Cerrno/Nid', $responseStr);
+        $response = unpack('Ccmd/Cerrno/Nid', $rawResponse);
         $this->setId($response['id']);
         $this->setCode($response['errno']);
         return $this;
