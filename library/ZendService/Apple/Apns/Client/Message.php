@@ -55,8 +55,7 @@ class Message
             throw new Exception\RuntimeException('You must first open the connection by calling open()');
         }
 
-        $payload = $message->toPayload();
-        $ret = $this->write($payload);
+        $ret = $this->write($message->getPayloadJson());
         if ($ret === false) {
             throw new Exception\RuntimeException('Server is unavailable; please retry later');
         }

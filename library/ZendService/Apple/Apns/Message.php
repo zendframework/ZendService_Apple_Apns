@@ -13,6 +13,7 @@
 namespace ZendService\Apple\Apns;
 
 use ZendService\Apple\Exception;
+use Zend\Json\Json;
 
 /**
  * Apple Push Notification Client
@@ -240,13 +241,48 @@ class Message
     }
     
     /**
-     * To Payload
-     * Generate APN json object.
+     * Get Payload
+     * Generate APN array.
+     *
+     * @return array
+     */
+    public function getPayload()
+    {
+        $message = array();
+        $message['aps'] = array();
+        if ($this->alert && ($alert = $this->alert->getPayload())) {
+            $message['aps']['alert'] = $alert;
+        }
+        if (!is_null($this->badge)) {
+            $message['aps']['badge'] = $this->badge;
+        }
+        if (!is_null($this->sound)) {
+            $message['aps']['sound'] = $this->sound;
+        }
+        if (!empty($this->custom)) {
+            $message = array_merge($this->custom, $message);
+        }
+        return $message;
+    }
+
+    /**
+     * Get Payload JSON
      *
      * @return string
      */
-    public function toPayload()
+    public function getPayloadJson()
     {
-        
+        $payload = $message->getPayload();
+        // don't escape utf8 payloads unless json_encode does not exist.
+        if (defined('JSON_UNESCAPED_UNICODE') && function_exists('mb_strlen')) {
+            $payload = json_encode($payload, JSON_UNESCAPED_UNICODE);
+            $length = mb_strlen($length, 'UTF-8');
+        } else {
+            $payload = Json::encode($payload);
+            $length = strlen($payload);
+        }
+        return pack('CNNnH*', 1, $this->id, $this->expire, 32, $this->token)
+            . pack('n', $length)
+            . $payload;
     }
 }

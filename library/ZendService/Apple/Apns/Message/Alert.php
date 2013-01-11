@@ -215,12 +215,26 @@ class Alert
 
     /**
      * To Payload
-     * Formats an APS alert json object.
+     * Formats an APS alert.
      *
-     * @return string
+     * @return array|string
      */
-    public function toPayload()
+    public function getPayload()
     {
-
+        $vars = get_object_vars($this);
+        if (empty($vars)) {
+            return null;
+        }
+        if (count(array_unique($vars)) === 1) {
+            return $this->getBody();
+        }
+        $alert = array();
+        foreach ($vars as $key => $value) {
+            if (!is_null($value)) {
+                $key = strtolower(preg_replace('/([a-z])([A-Z])/', '$1_$2', $key));
+                $alert[$key] = $value;
+            }
+        }
+        return $alert;
     }
 }
