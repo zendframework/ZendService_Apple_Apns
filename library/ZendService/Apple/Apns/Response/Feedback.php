@@ -102,9 +102,9 @@ class Feedback
     public function parseRawResponse($rawResponse)
     {
         $rawResponse = trim($rawResponse);
-        $token = unpack('Ntime/ntokenLength/H*token', $rawResponse);
+        $token = unpack('Ntime/nlength/H*token', $rawResponse);
         $this->setTime($token['time']);
-        $this->setToken($token['token']);
+        $this->setToken(substr($token['token'], 0, $token['length']));
         return $this;
     }
 

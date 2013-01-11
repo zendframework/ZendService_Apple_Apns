@@ -40,7 +40,7 @@ class FeedbackClientTest extends \PHPUnit_Framework_TestCase
     {
         $this->setupValidBase();
         $time = time();
-        $token = bin2hex('abc123');
+        $token = 'abc123';
         $length = strlen($token);
         $this->apns->setReadResponse(pack('NnH*', $time, $length, $token));
         $response = $this->apns->feedback();
