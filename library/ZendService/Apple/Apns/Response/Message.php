@@ -37,7 +37,7 @@ class Message
     const RESULT_INVALID_PAYLOAD_SIZE = 7;
     const RESULT_INVALID_TOKEN = 8;
     const RESULT_UNKNOWN_ERROR = 255;
-    
+
     /**
      * Identifier
      * @var string
@@ -48,7 +48,7 @@ class Message
      * Result Code
      * @var int
      */
-    protected $code;    
+    protected $code;
 
     /**
      * Constructor

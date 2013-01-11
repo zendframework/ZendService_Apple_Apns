@@ -45,7 +45,8 @@ class FeedbackClient extends ZfFeedbackClient
      * @param string $str
      * @return FeedbackClient
      */
-    public function setReadResponse($str) {
+    public function setReadResponse($str)
+    {
         $this->readResponse = $str;
         return $this;
     }

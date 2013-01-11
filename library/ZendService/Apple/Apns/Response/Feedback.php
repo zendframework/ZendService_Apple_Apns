@@ -50,7 +50,7 @@ class Feedback
 
     /**
      * Get Token
-     * 
+     *
      * @return string
      */
     public function getToken()

@@ -136,7 +136,7 @@ class Message
     {
         if ($expire instanceof \DateTime) {
             $expire = $expire->getTimestamp();
-        } else if (!is_numeric($expire) || $expire != (int) $expire) {
+        } elseif (!is_numeric($expire) || $expire != (int) $expire) {
             throw new Exception\InvalidArgumentException('Expiration must be a DateTime object or a unix timestamp');
         }
         $this->expire = $expire;
@@ -237,7 +237,7 @@ class Message
         $this->custom = $custom;
         return $this;
     }
-    
+
     /**
      * Get Payload
      * Generate APN array.

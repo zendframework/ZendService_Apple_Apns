@@ -111,7 +111,7 @@ abstract class AbstractClient
         }
         stream_set_blocking($this->socket, 0);
         stream_set_write_buffer($this->socket, 0);
-        return $this; 
+        return $this;
     }
 
     /**

@@ -45,7 +45,8 @@ class MessageClient extends ZfMessageClient
      * @param string $str
      * @return MessageClient
      */
-    public function setReadResponse($str) {
+    public function setReadResponse($str)
+    {
         $this->readResponse = $str;
         return $this;
     }

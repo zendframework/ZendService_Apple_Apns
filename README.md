@@ -1,6 +1,9 @@
 ZendService\Apple\Apns component
+================================
 
-You can install using:
+Provides support for Apple push notifications.
+
+Install dependencies using:
 
 ```
 curl -s https://getcomposer.org/installer | php

@@ -47,7 +47,7 @@ class Feedback extends AbstractClient
         $tokens = array();
         while ($token = $this->read(38)) {
             $tokens[] = new FeedbackResponse($token);
-        }   
+        }
         return $tokens;
     }
 }
