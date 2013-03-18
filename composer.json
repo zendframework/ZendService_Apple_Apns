@@ -1,6 +1,6 @@
 {
     "name": "zendframework/zendservice-apple-apns",
-    "description": "OOP wrapper for Apple Push Notification Service",
+    "description": "OOP Zend Framework 2 wrapper for Apple Push Notification Service",
     "type": "library",
     "keywords": [
         "zf2",
@@ -25,5 +25,8 @@
     "require": {
         "php": ">=5.3.3",
         "zendframework/zend-json": ">=2.0.0"
-    }
+    },
+    "require-dev": {
+        "phpunit/phpunit": "3.7.*"
+	}
 }

@@ -5,9 +5,7 @@
  * @link      http://github.com/zendframework/zf2 for the canonical source repository
  * @copyright Copyright (c) 2005-2012 Zend Technologies USA Inc. (http://www.zend.com)
  * @license   http://framework.zend.com/license/new-bsd New BSD License
- * @category   ZendService
- * @package    ZendService_Apple
- * @subpackage Apns
+ * @package   Zend_Service
  */
 
 namespace ZendService\Apple\Apns\Client;
@@ -16,10 +14,6 @@ use ZendService\Apple\Exception;
 
 /**
  * Apple Push Notification Abstract Client
- *
- * @category   ZendService
- * @package    ZendService_Apple
- * @subpackage Apns
  */
 abstract class AbstractClient
 {
@@ -48,10 +42,16 @@ abstract class AbstractClient
      */
     protected $socket;
 
+    
     /**
-     * Open Connection
-     *
-     * @return Client
+     * Open Connection to APNS Service
+     * 
+     * @param int $environment
+     * @param string $certificate
+     * @param string $passPhrase
+     * @throws Exception\RuntimeException
+     * @throws Exception\InvalidArgumentException
+     * @return AbstractClient
      */
     public function open($environment, $certificate, $passPhrase = null)
     {
@@ -64,7 +64,7 @@ abstract class AbstractClient
         }
 
         if (!is_string($certificate) || !file_exists($certificate)) {
-            throw new Exception\InvalidArgumentException('SSL Certificate file path invalid');
+            throw new Exception\InvalidArgumentException('Certificate must be a valid path to a APNS certificate');
         }
 
         $sslOptions = array(
@@ -94,7 +94,7 @@ abstract class AbstractClient
             $host,
             $errno,
             $errstr,
-            ini_get('socket_timeout'),
+            ini_get('default_socket_timeout'),
             STREAM_CLIENT_CONNECT,
             stream_context_create(array(
                 'ssl' => $ssl,
@@ -117,7 +117,7 @@ abstract class AbstractClient
     /**
      * Close Connection
      *
-     * @return Client
+     * @return AbstractClient
      */
     public function close()
     {
