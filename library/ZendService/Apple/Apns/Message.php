@@ -5,22 +5,16 @@
  * @link      http://github.com/zendframework/zf2 for the canonical source repository
  * @copyright Copyright (c) 2005-2012 Zend Technologies USA Inc. (http://www.zend.com)
  * @license   http://framework.zend.com/license/new-bsd New BSD License
- * @category   ZendService
- * @package    ZendService_Apple
- * @subpackage Apns
+ * @package   Zend_Service
  */
 
 namespace ZendService\Apple\Apns;
 
 use ZendService\Apple\Exception;
-use Zend\Json\Json;
+use Zend\Json\Encoder as JsonEncoder;
 
 /**
  * APNs Message
- *
- * @category   ZendService
- * @package    ZendService_Apple
- * @subpackage Apns
  */
 class Message
 {
@@ -109,9 +103,30 @@ class Message
      */
     public function setToken($token)
     {
-        if (!is_scalar($token)) {
-            throw new Exception\InvalidArgumentException('Token must be a scalar value');
+        
+        if (!is_string($token)) {
+        	throw new Exception\InvalidArgumentException(sprintf(
+        			'Device token must be a string, "%s" given.',
+        			gettype($token)
+        	));
         }
+        
+        if (preg_match('/[^0-9a-f]/', $token)) {
+        	throw new Exception\InvalidArgumentException(sprintf(
+        			'Device token must be mask "%s". Token given: "%s"',
+        			'/[^0-9a-f]/',
+        			$token
+        	));
+        }
+        
+        if (strlen($token) != 64) {
+        	throw new Exception\InvalidArgumentException(sprintf(
+        			'Device token must be a 64 charsets, Token length given: %d.',
+        			mb_strlen($token)
+        	));
+        }
+        
+        
         $this->token = $token;
         return $this;
     }
@@ -230,10 +245,16 @@ class Message
     /**
      * Set Custom Data
      *
+     * @param array $custom
+     * @throws Exception\RuntimeException
      * @return Message
      */
     public function setCustom(array $custom)
     {
+    	if (array_key_exists('aps', $custom)) {
+    		throw new Exception\RuntimeException('custom data must not contain aps key as it is reserved by apple');
+    	}
+    	
         $this->custom = $custom;
         return $this;
     }
@@ -276,7 +297,7 @@ class Message
             $payload = json_encode($payload, JSON_UNESCAPED_UNICODE);
             $length = mb_strlen($payload, 'UTF-8');
         } else {
-            $payload = Json::encode($payload);
+            $payload = JsonEncoder::encode($payload);
             $length = strlen($payload);
         }
         return pack('CNNnH*', 1, $this->id, $this->expire, 32, $this->token)

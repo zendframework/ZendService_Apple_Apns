@@ -5,9 +5,7 @@
  * @link      http://github.com/zendframework/zf2 for the canonical source repository
  * @copyright Copyright (c) 2005-2012 Zend Technologies USA Inc. (http://www.zend.com)
  * @license   http://framework.zend.com/license/new-bsd New BSD License
- * @category   ZendService
- * @package    ZendService_Apple
- * @subpackage Apns
+ * @package   Zend_Service
  */
 
 namespace ZendService\Apple\Apns\Client;
@@ -17,10 +15,6 @@ use ZendService\Apple\Apns\Response\Feedback as FeedbackResponse;
 
 /**
  * Feedback Client
- *
- * @category   ZendService
- * @package    ZendService_Apple
- * @subpackage Apns
  */
 class Feedback extends AbstractClient
 {
