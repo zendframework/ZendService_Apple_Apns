@@ -170,16 +170,14 @@ class Alert
     /**
      * Set Locale Arguments
      *
-     * @param  array|null $args
+     * @param  array $args
      * @return Alert
      */
     public function setLocArgs(array $args)
     {
-        if (!is_null($args)) {
-            foreach ($args as $a) {
-                if (!is_scalar($a)) {
-                    throw new Exception\InvalidArgumentException('Arguments must only contain scalar values');
-                }
+        foreach ($args as $a) {
+            if (!is_scalar($a)) {
+                throw new Exception\InvalidArgumentException('Arguments must only contain scalar values');
             }
         }
         $this->locArgs = $args;
