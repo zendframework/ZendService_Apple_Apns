@@ -274,7 +274,7 @@ class Message
         // don't escape utf8 payloads unless json_encode does not exist.
         if (defined('JSON_UNESCAPED_UNICODE') && function_exists('mb_strlen')) {
             $payload = json_encode($payload, JSON_UNESCAPED_UNICODE);
-            $length = mb_strlen($length, 'UTF-8');
+            $length = mb_strlen($payload, 'UTF-8');
         } else {
             $payload = Json::encode($payload);
             $length = strlen($payload);

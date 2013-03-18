@@ -75,7 +75,7 @@ class Alert
             $this->setLocKey($locKey);
         }
         if ($locArgs !== null) {
-            $this->setLocArgs();
+            $this->setLocArgs($locArgs);
         }
         if ($launchImage !== null) {
             $this->setLaunchImage($launchImage);

@@ -117,4 +117,21 @@ class MessageTest extends \PHPUnit_Framework_TestCase
         $this->message->setCustom($data);
         $this->assertEquals($data, $this->message->getCustom());
     }
+
+    public function testAlertConstructor()
+    {
+        $alert = new Alert(
+            'Foo wants to play Bar!',
+            'PLAY',
+            'GAME_PLAY_REQUEST_FORMAT',
+            array('Foo', 'Baz'),
+            'Default.png'
+        );
+
+        $this->assertEquals('Foo wants to play Bar!', $alert->getBody());
+        $this->assertEquals('PLAY', $alert->getActionLocKey());
+        $this->assertEquals('GAME_PLAY_REQUEST_FORMAT', $alert->getLocKey());
+        $this->assertEquals(array('Foo', 'Baz'), $alert->getLocArgs());
+        $this->assertEquals('Default.png', $alert->getLaunchImage());
+    }
 }
