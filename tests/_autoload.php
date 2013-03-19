@@ -24,5 +24,6 @@ spl_autoload_register(function ($class) {
     if (!file_exists($filename)) {
         return false;
     }
+
     return include_once $filename;
 });

@@ -5,9 +5,7 @@
  * @link      http://github.com/zendframework/zf2 for the canonical source repository
  * @copyright Copyright (c) 2005-2012 Zend Technologies USA Inc. (http://www.zend.com)
  * @license   http://framework.zend.com/license/new-bsd New BSD License
- * @category   ZendService
- * @package    ZendService_Apple
- * @subpackage Apns
+ * @package   Zend_Service
  */
 
 namespace ZendService\Apple\Apns\Client;
@@ -16,10 +14,6 @@ use ZendService\Apple\Exception;
 
 /**
  * Apple Push Notification Abstract Client
- *
- * @category   ZendService
- * @package    ZendService_Apple
- * @subpackage Apns
  */
 abstract class AbstractClient
 {
@@ -49,9 +43,14 @@ abstract class AbstractClient
     protected $socket;
 
     /**
-     * Open Connection
+     * Open Connection to APNS Service
      *
-     * @return Client
+     * @param  int                                $environment
+     * @param  string                             $certificate
+     * @param  string                             $passPhrase
+     * @throws Exception\RuntimeException
+     * @throws Exception\InvalidArgumentException
+     * @return AbstractClient
      */
     public function open($environment, $certificate, $passPhrase = null)
     {
@@ -64,7 +63,7 @@ abstract class AbstractClient
         }
 
         if (!is_string($certificate) || !file_exists($certificate)) {
-            throw new Exception\InvalidArgumentException('SSL Certificate file path invalid');
+            throw new Exception\InvalidArgumentException('Certificate must be a valid path to a APNS certificate');
         }
 
         $sslOptions = array(
@@ -78,14 +77,15 @@ abstract class AbstractClient
         }
         $this->connect($this->uris[$environment], $sslOptions);
         $this->isConnected = true;
+
         return $this;
     }
 
     /**
      * Connect to Host
      *
-     * @param string $host
-     * @param array  $ssl
+     * @param  string         $host
+     * @param  array          $ssl
      * @return AbstractClient
      */
     protected function connect($host, array $ssl)
@@ -94,7 +94,7 @@ abstract class AbstractClient
             $host,
             $errno,
             $errstr,
-            ini_get('socket_timeout'),
+            ini_get('default_socket_timeout'),
             STREAM_CLIENT_CONNECT,
             stream_context_create(array(
                 'ssl' => $ssl,
@@ -111,13 +111,14 @@ abstract class AbstractClient
         }
         stream_set_blocking($this->socket, 0);
         stream_set_write_buffer($this->socket, 0);
+
         return $this;
     }
 
     /**
      * Close Connection
      *
-     * @return Client
+     * @return AbstractClient
      */
     public function close()
     {
@@ -125,6 +126,7 @@ abstract class AbstractClient
             fclose($this->socket);
         }
         $this->isConnected = false;
+
         return $this;
     }
 
@@ -141,7 +143,7 @@ abstract class AbstractClient
     /**
      * Read from the Server
      *
-     * @param int $length
+     * @param  int    $length
      * @return string
      */
     protected function read($length = 1024)
@@ -153,13 +155,14 @@ abstract class AbstractClient
         if (!feof($this->socket)) {
             $data = fread($this->socket, (int) $length);
         }
+
         return $data;
     }
 
     /**
      * Write Payload to the Server
      *
-     * @param string $payload
+     * @param  string $payload
      * @return int
      */
     protected function write($payload)
@@ -167,6 +170,7 @@ abstract class AbstractClient
         if (!$this->isConnected()) {
             throw new Exception\RuntimeException('You must open the connection prior to writing data');
         }
+
         return @fwrite($this->socket, $payload);
     }
 
