@@ -5,9 +5,7 @@
  * @link      http://github.com/zendframework/zf2 for the canonical source repository
  * @copyright Copyright (c) 2005-2012 Zend Technologies USA Inc. (http://www.zend.com)
  * @license   http://framework.zend.com/license/new-bsd New BSD License
- * @category   ZendService
- * @package    ZendService_Apple
- * @subpackage Apns
+ * @package   Zend_Service
  */
 
 namespace ZendService\Apple\Apns\Response;
@@ -16,10 +14,6 @@ use ZendService\Apple\Exception;
 
 /**
  * Feedback Response
- *
- * @category   ZendService
- * @package    ZendService_Apple
- * @subpackage Apns
  */
 class Feedback
 {
@@ -38,7 +32,7 @@ class Feedback
     /**
      * Constructor
      *
-     * @param string $rawResponse
+     * @param  string   $rawResponse
      * @return Feedback
      */
     public function __construct($rawResponse = null)
@@ -69,6 +63,7 @@ class Feedback
             throw new Exception\InvalidArgumentException('Token must be a scalar value');
         }
         $this->token = $token;
+
         return $this;
     }
 
@@ -85,12 +80,13 @@ class Feedback
     /**
      * Set Time
      *
-     * @param int $time
+     * @param  int      $time
      * @return Feedback
      */
     public function setTime($time)
     {
         $this->time = (int) $time;
+
         return $this;
     }
 
@@ -105,6 +101,7 @@ class Feedback
         $token = unpack('Ntime/nlength/H*token', $rawResponse);
         $this->setTime($token['time']);
         $this->setToken(substr($token['token'], 0, $token['length']));
+
         return $this;
     }
 

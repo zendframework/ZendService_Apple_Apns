@@ -2,12 +2,10 @@
 /**
  * Zend Framework (http://framework.zend.com/)
  *
- * @link       http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright  Copyright (c) 2005-2012 Zend Technologies USA Inc. (http://www.zend.com)
- * @license    http://framework.zend.com/license/new-bsd New BSD License
- * @category   ZendService
- * @package    ZendService_Apple
- * @subpackage Apns
+ * @link      http://github.com/zendframework/zf2 for the canonical source repository
+ * @copyright Copyright (c) 2005-2012 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * @package   Zend_Service
  */
 
 namespace ZendServiceTest\Apple\Apns\TestAsset;
@@ -42,24 +40,26 @@ class FeedbackClient extends ZfFeedbackClient
     /**
      * Set the Response
      *
-     * @param string $str
+     * @param  string         $str
      * @return FeedbackClient
      */
     public function setReadResponse($str)
     {
         $this->readResponse = $str;
+
         return $this;
     }
 
     /**
      * Set the write response
      *
-     * @param mixed $resp
+     * @param  mixed          $resp
      * @return FeedbackClient
      */
     public function setWriteResponse($resp)
     {
         $this->writeResponse = $resp;
+
         return $this;
     }
 
@@ -76,7 +76,7 @@ class FeedbackClient extends ZfFeedbackClient
     /**
      * Return Response
      *
-     * @param string $length
+     * @param  string $length
      * @return string
      */
     protected function read($length = 1024)
@@ -86,13 +86,14 @@ class FeedbackClient extends ZfFeedbackClient
         }
         $ret = substr($this->readResponse, 0, $length);
         $this->readResponse = null;
+
         return $ret;
     }
 
     /**
      * Write and Return Length
      *
-     * @param string $payload
+     * @param  string $payload
      * @return int
      */
     protected function write($payload)
@@ -102,6 +103,7 @@ class FeedbackClient extends ZfFeedbackClient
         }
         $ret = $this->writeResponse;
         $this->writeResponse = null;
+
         return (null === $ret) ? strlen($payload) : $ret;
     }
 }

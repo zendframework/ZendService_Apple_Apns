@@ -5,22 +5,16 @@
  * @link      http://github.com/zendframework/zf2 for the canonical source repository
  * @copyright Copyright (c) 2005-2012 Zend Technologies USA Inc. (http://www.zend.com)
  * @license   http://framework.zend.com/license/new-bsd New BSD License
- * @category   ZendService
- * @package    ZendService_Apple
- * @subpackage Apns
+ * @package   Zend_Service
  */
 
 namespace ZendService\Apple\Apns;
 
 use ZendService\Apple\Exception;
-use Zend\Json\Json;
+use Zend\Json\Encoder as JsonEncoder;
 
 /**
  * APNs Message
- *
- * @category   ZendService
- * @package    ZendService_Apple
- * @subpackage Apns
  */
 class Message
 {
@@ -79,7 +73,7 @@ class Message
     /**
      * Set Identifier
      *
-     * @param string $id
+     * @param  string  $id
      * @return Message
      */
     public function setId($id)
@@ -88,6 +82,7 @@ class Message
             throw new Exception\InvalidArgumentException('Identifier must be a scalar value');
         }
         $this->id = $id;
+
         return $this;
     }
 
@@ -104,15 +99,36 @@ class Message
     /**
      * Set Token
      *
-     * @param string $token
+     * @param  string  $token
      * @return Message
      */
     public function setToken($token)
     {
-        if (!is_scalar($token)) {
-            throw new Exception\InvalidArgumentException('Token must be a scalar value');
+
+        if (!is_string($token)) {
+            throw new Exception\InvalidArgumentException(sprintf(
+                    'Device token must be a string, "%s" given.',
+                    gettype($token)
+            ));
         }
+
+        if (preg_match('/[^0-9a-f]/', $token)) {
+            throw new Exception\InvalidArgumentException(sprintf(
+                    'Device token must be mask "%s". Token given: "%s"',
+                    '/[^0-9a-f]/',
+                    $token
+            ));
+        }
+
+        if (strlen($token) != 64) {
+            throw new Exception\InvalidArgumentException(sprintf(
+                    'Device token must be a 64 charsets, Token length given: %d.',
+                    mb_strlen($token)
+            ));
+        }
+
         $this->token = $token;
+
         return $this;
     }
 
@@ -129,7 +145,7 @@ class Message
     /**
      * Set Expiration
      *
-     * @param int|DateTime $expire
+     * @param  int|DateTime $expire
      * @return Message
      */
     public function setExpire($expire)
@@ -140,6 +156,7 @@ class Message
             throw new Exception\InvalidArgumentException('Expiration must be a DateTime object or a unix timestamp');
         }
         $this->expire = $expire;
+
         return $this;
     }
 
@@ -156,7 +173,7 @@ class Message
     /**
      * Set Alert
      *
-     * @param string|Message\Alert|null $alert
+     * @param  string|Message\Alert|null $alert
      * @return Message
      */
     public function setAlert($alert)
@@ -165,6 +182,7 @@ class Message
             $alert = new Message\Alert($alert);
         }
         $this->alert = $alert;
+
         return $this;
     }
 
@@ -181,7 +199,7 @@ class Message
     /**
      * Set Badge
      *
-     * @param int|null $badge
+     * @param  int|null $badge
      * @return Message
      */
     public function setBadge($badge)
@@ -205,7 +223,7 @@ class Message
     /**
      * Set Sound
      *
-     * @param string|null $sound
+     * @param  string|null $sound
      * @return Message
      */
     public function setSound($sound)
@@ -214,6 +232,7 @@ class Message
             throw new Exception\InvalidArgumentException('Sound must be a scalar value');
         }
         $this->sound = $sound;
+
         return $this;
     }
 
@@ -230,11 +249,18 @@ class Message
     /**
      * Set Custom Data
      *
+     * @param  array                      $custom
+     * @throws Exception\RuntimeException
      * @return Message
      */
     public function setCustom(array $custom)
     {
+        if (array_key_exists('aps', $custom)) {
+            throw new Exception\RuntimeException('custom data must not contain aps key as it is reserved by apple');
+        }
+
         $this->custom = $custom;
+
         return $this;
     }
 
@@ -260,6 +286,7 @@ class Message
         if (!empty($this->custom)) {
             $message = array_merge($this->custom, $message);
         }
+
         return $message;
     }
 
@@ -276,9 +303,10 @@ class Message
             $payload = json_encode($payload, JSON_UNESCAPED_UNICODE);
             $length = mb_strlen($payload, 'UTF-8');
         } else {
-            $payload = Json::encode($payload);
+            $payload = JsonEncoder::encode($payload);
             $length = strlen($payload);
         }
+
         return pack('CNNnH*', 1, $this->id, $this->expire, 32, $this->token)
             . pack('n', $length)
             . $payload;

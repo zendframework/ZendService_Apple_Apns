@@ -5,9 +5,7 @@
  * @link      http://github.com/zendframework/zf2 for the canonical source repository
  * @copyright Copyright (c) 2005-2012 Zend Technologies USA Inc. (http://www.zend.com)
  * @license   http://framework.zend.com/license/new-bsd New BSD License
- * @category   ZendService
- * @package    ZendService_Apple
- * @subpackage Apns
+ * @package   Zend_Service
  */
 
 namespace ZendService\Apple\Apns\Message;
@@ -16,10 +14,6 @@ use ZendService\Apple\Exception;
 
 /**
  * Message Alert Object
- *
- * @category   ZendService
- * @package    ZendService_Apple
- * @subpackage Apns
  */
 class Alert
 {
@@ -56,11 +50,11 @@ class Alert
     /**
      * Constructor
      *
-     * @param string $body
-     * @param string $actionLocKey
-     * @param string $locKey
-     * @param array $locArgs
-     * @param string $launchImage
+     * @param  string $body
+     * @param  string $actionLocKey
+     * @param  string $locKey
+     * @param  array  $locArgs
+     * @param  string $launchImage
      * @return Alert
      */
     public function __construct($body = null, $actionLocKey = null, $locKey = null, $locArgs = null, $launchImage = null)
@@ -95,7 +89,7 @@ class Alert
     /**
      * Set Body
      *
-     * @param string|null $body
+     * @param  string|null $body
      * @return Alert
      */
     public function setBody($body)
@@ -104,6 +98,7 @@ class Alert
             throw new Exception\InvalidArgumentException('Body must be null OR a scalar value');
         }
         $this->body = $body;
+
         return $this;
     }
 
@@ -120,7 +115,7 @@ class Alert
     /**
      * Set Action Locale Key
      *
-     * @param string|null $key
+     * @param  string|null $key
      * @return Alert
      */
     public function setActionLocKey($key)
@@ -129,6 +124,7 @@ class Alert
             throw new Exception\InvalidArgumentException('ActionLocKey must be null OR a scalar value');
         }
         $this->actionLocKey = $key;
+
         return $this;
     }
 
@@ -145,7 +141,7 @@ class Alert
     /**
      * Set Locale Key
      *
-     * @param string|null $key
+     * @param  string|null $key
      * @return Alert
      */
     public function setLocKey($key)
@@ -154,6 +150,7 @@ class Alert
             throw new Exception\InvalidArgumentException('LocKey must be null OR a scalar value');
         }
         $this->locKey = $key;
+
         return $this;
     }
 
@@ -181,6 +178,7 @@ class Alert
             }
         }
         $this->locArgs = $args;
+
         return $this;
     }
 
@@ -197,7 +195,7 @@ class Alert
     /**
      * Set Launch Image
      *
-     * @param string|null $image
+     * @param  string|null $image
      * @return Alert
      */
     public function setLaunchImage($image)
@@ -206,6 +204,7 @@ class Alert
             throw new Exception\InvalidArgumentException('Launch image must be null OR a scalar value');
         }
         $this->launchImage =  $image;
+
         return $this;
     }
 
@@ -231,6 +230,7 @@ class Alert
                 $alert[$key] = $value;
             }
         }
+
         return $alert;
     }
 }

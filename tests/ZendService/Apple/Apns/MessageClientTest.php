@@ -14,7 +14,6 @@ namespace ZendServiceTest\Apple\Apns;
 
 use ZendServiceTest\Apple\Apns\TestAsset\MessageClient;
 use ZendService\Apple\Apns\Message;
-use ZendService\Apple\Apns\Message\Alert;
 use ZendService\Apple\Apns\Response\Message as MessageResponse;
 
 /**
@@ -37,7 +36,7 @@ class MessageClientTest extends \PHPUnit_Framework_TestCase
     protected function setupValidBase()
     {
         $this->apns->open(MessageClient::SANDBOX_URI, __DIR__ . '/TestAsset/certificate.pem');
-        $this->message->setToken('AF0123DE');
+        $this->message->setToken('662cfe5a69ddc65cdd39a1b8f8690647778204b064df7b264e8c4c254f94fdd8');
         $this->message->setId(time());
         $this->message->setAlert('bar');
     }

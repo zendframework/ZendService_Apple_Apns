@@ -37,7 +37,7 @@ class Message extends AbstractClient
     /**
      * Send Message
      *
-     * @param ZendService\Apple\Apns\Message $message
+     * @param  ZendService\Apple\Apns\Message          $message
      * @return ZendService\Apple\Apns\Response\Message
      */
     public function send(ApnsMessage $message)
@@ -50,6 +50,7 @@ class Message extends AbstractClient
         if ($ret === false) {
             throw new Exception\RuntimeException('Server is unavailable; please retry later');
         }
+
         return new MessageResponse($this->read());
     }
 }

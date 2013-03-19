@@ -53,7 +53,7 @@ class Message
     /**
      * Constructor
      *
-     * @param string $rawResponse
+     * @param  string  $rawResponse
      * @return Message
      */
     public function __construct($rawResponse = null)
@@ -76,7 +76,7 @@ class Message
     /**
      * Set Code
      *
-     * @param int $code
+     * @param  int     $code
      * @return Message
      */
     public function setCode($code)
@@ -85,6 +85,7 @@ class Message
             throw new Exception\InvalidArgumentException('Code must be between 0-8 OR 255');
         }
         $this->code = $code;
+
         return $this;
     }
 
@@ -101,7 +102,7 @@ class Message
     /**
      * Set Identifier
      *
-     * @param string $id
+     * @param  string  $id
      * @return Message
      */
     public function setId($id)
@@ -110,13 +111,14 @@ class Message
             throw new Exception\InvalidArgumentException('Identifier must be a scalar value');
         }
         $this->id = $id;
+
         return $this;
     }
 
     /**
      * Parse Raw Response
      *
-     * @param string $rawResponse
+     * @param  string  $rawResponse
      * @return Message
      */
     public function parseRawResponse($rawResponse)
@@ -127,11 +129,13 @@ class Message
 
         if (strlen($rawResponse) === 0) {
             $this->code = self::RESULT_OK;
+
             return $this;
         }
         $response = unpack('Ccmd/Cerrno/Nid', $rawResponse);
         $this->setId($response['id']);
         $this->setCode($response['errno']);
+
         return $this;
     }
 }
