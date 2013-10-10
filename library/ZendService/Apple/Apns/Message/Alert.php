@@ -226,7 +226,7 @@ class Alert
         $alert = array();
         foreach ($vars as $key => $value) {
             if (!is_null($value)) {
-                $key = strtolower(preg_replace('/([a-z])([A-Z])/', '$1_$2', $key));
+                $key = strtolower(preg_replace('/([a-z])([A-Z])/', '$1-$2', $key));
                 $alert[$key] = $value;
             }
         }
