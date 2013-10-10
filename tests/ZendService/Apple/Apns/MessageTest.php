@@ -131,4 +131,30 @@ class MessageTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(array('Foo', 'Baz'), $alert->getLocArgs());
         $this->assertEquals('Default.png', $alert->getLaunchImage());
     }
+
+    public function testAlertJsonPayload()
+    {
+        $alert = new Alert(
+            'Foo wants to play Bar!',
+            'PLAY',
+            'GAME_PLAY_REQUEST_FORMAT',
+            array('Foo', 'Baz'),
+            'Default.png'
+        );
+        $payload = $alert->getPayload();
+
+        $this->assertArrayHasKey('body', $payload);
+        $this->assertArrayHasKey('action-loc-key', $payload);
+        $this->assertArrayHasKey('loc-key', $payload);
+        $this->assertArrayHasKey('loc-args', $payload);
+        $this->assertArrayHasKey('launch-image', $payload);
+    }
+
+    public function testAlertPayloadSendsOnlyBody()
+    {
+        $alert = new Alert('Foo wants Bar');
+        $payload = $alert->getPayload();
+
+        $this->assertEquals('Foo wants Bar', $payload);
+    }
 }
