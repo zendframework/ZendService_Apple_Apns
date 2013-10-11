@@ -102,10 +102,16 @@ class MessageTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($sound, $this->message->getSound());
     }
 
-    public function testSetSoundThrowsExceptionOnNonString()
+    public function testSetSoundThrowsExceptionOnNonScalar()
     {
         $this->setExpectedException('InvalidArgumentException');
         $this->message->setSound(array());
+    }
+
+    public function testSetSoundThrowsExceptionOnNonString()
+    {
+        $this->setExpectedException('InvalidArgumentException');
+        $this->message->setSound(12345);
     }
 
     public function testSetCustomData()

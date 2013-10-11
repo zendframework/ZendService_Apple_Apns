@@ -228,8 +228,8 @@ class Message
      */
     public function setSound($sound)
     {
-        if (!is_scalar($sound)) {
-            throw new Exception\InvalidArgumentException('Sound must be a scalar value');
+        if ($sound !== null && !is_string($sound)) {
+            throw new Exception\InvalidArgumentException('Sound must be null or a string');
         }
         $this->sound = $sound;
 
