@@ -130,5 +130,6 @@ class MessageTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('GAME_PLAY_REQUEST_FORMAT', $alert->getLocKey());
         $this->assertEquals(array('Foo', 'Baz'), $alert->getLocArgs());
         $this->assertEquals('Default.png', $alert->getLaunchImage());
+        $this->assertEquals('json', $alert->getPayload());
     }
 }
