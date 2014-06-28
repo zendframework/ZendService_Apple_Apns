@@ -10,7 +10,7 @@
 
 namespace ZendService\Apple\Apns\Client;
 
-use ZendService\Apple\Exception;
+use ZendService\Apple\Apns\Exception;
 
 /**
  * Apple Push Notification Abstract Client

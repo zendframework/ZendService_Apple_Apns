@@ -8,9 +8,12 @@
  * @package   Zend_Service
  */
 
-namespace ZendService\Apple\Exception;
+namespace ZendService\Apple\Apns\Exception;
 
-class RuntimeException extends \RuntimeException
+/**
+ * Invalid Argument Exception
+ */
+class InvalidArgumentException extends \InvalidArgumentException
 {
 
 }
