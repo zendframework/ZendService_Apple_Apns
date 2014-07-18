@@ -12,7 +12,7 @@
 
 namespace ZendService\Apple\Apns\Response;
 
-use ZendService\Apple\Exception;
+use ZendService\Apple\Apns\Exception;
 
 /**
  * Message Response

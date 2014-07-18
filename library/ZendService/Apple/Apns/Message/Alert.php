@@ -10,7 +10,7 @@
 
 namespace ZendService\Apple\Apns\Message;
 
-use ZendService\Apple\Exception;
+use ZendService\Apple\Apns\Exception;
 
 /**
  * Message Alert Object
