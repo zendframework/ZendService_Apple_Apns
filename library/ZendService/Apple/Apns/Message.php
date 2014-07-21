@@ -273,18 +273,21 @@ class Message
     public function getPayload()
     {
         $message = array();
-        $message['aps'] = array();
+        $aps = array();
         if ($this->alert && ($alert = $this->alert->getPayload())) {
-            $message['aps']['alert'] = $alert;
+            $aps['alert'] = $alert;
         }
         if (!is_null($this->badge)) {
-            $message['aps']['badge'] = $this->badge;
+            $aps['badge'] = $this->badge;
         }
         if (!is_null($this->sound)) {
-            $message['aps']['sound'] = $this->sound;
+            $aps['sound'] = $this->sound;
         }
         if (!empty($this->custom)) {
             $message = array_merge($this->custom, $message);
+        }
+        if (!empty($aps)) {
+            $message['aps'] = $aps;
         }
 
         return $message;
