@@ -192,4 +192,14 @@ class MessageTest extends \PHPUnit_Framework_TestCase
             $this->assertEquals($this->message->getPayloadJson(), $result);
         }
     }
+
+    public function testCustomDataPayloadDoesNotIncludeEmptyApsData()
+    {
+        $data = array('custom' => 'data');
+        $this->message->setCustom($data);
+
+        $payload = $this->message->getPayload();
+        $this->assertEquals($payload, array('custom' => 'data'));
+    }
+
 }
