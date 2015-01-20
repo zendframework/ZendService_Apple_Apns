@@ -55,6 +55,12 @@ class Message
     protected $sound;
 
     /**
+     * Content Available
+     * @var int|null
+     */
+    protected $contentAvailable;
+
+    /**
      * Custom Attributes
      * @var array|null
      */
@@ -237,6 +243,32 @@ class Message
     }
 
     /**
+     * Get Content Available
+     *
+     * @return int|null
+     */
+    public function getContentAvailable()
+    {
+        return $this->contentAvailable;
+    }
+
+    /**
+     * Set Content Available
+     *
+     * @param  int|null $sound
+     * @return Message
+     */
+    public function setContentAvailable($value)
+    {
+        if ($value !== null && !is_int($value)) {
+            throw new Exception\InvalidArgumentException('Content Available must be null or an integer');
+        }
+        $this->contentAvailable = $value;
+
+        return $this;
+    }
+
+    /**
      * Get Custom Data
      *
      * @return array|null
@@ -282,6 +314,9 @@ class Message
         }
         if (!is_null($this->sound)) {
             $aps['sound'] = $this->sound;
+        }
+        if (!is_null($this->contentAvailable)) {
+            $aps['content-available'] = $this->contentAvailable;
         }
         if (!empty($this->custom)) {
             $message = array_merge($this->custom, $message);
