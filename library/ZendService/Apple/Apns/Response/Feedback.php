@@ -100,7 +100,7 @@ class Feedback
         $rawResponse = trim($rawResponse);
         $token = unpack('Ntime/nlength/H*token', $rawResponse);
         $this->setTime($token['time']);
-        $this->setToken(substr($token['token'], 0, $token['length']));
+        $this->setToken(substr($token['token'], 0, $token['length'] * 2));
 
         return $this;
     }

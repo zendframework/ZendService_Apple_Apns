@@ -38,7 +38,7 @@ class FeedbackClientTest extends \PHPUnit_Framework_TestCase
         $this->setupValidBase();
         $time = time();
         $token = 'abc123';
-        $length = strlen($token);
+        $length = strlen($token) / 2;
         $this->apns->setReadResponse(pack('NnH*', $time, $length, $token));
         $response = $this->apns->feedback();
         $this->assertCount(1, $response);
