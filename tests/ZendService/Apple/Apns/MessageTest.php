@@ -128,6 +128,14 @@ class MessageTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($value, $this->message->getContentAvailable());
     }
 
+    public function testSetContentAvailableResultsInCorrectPayload()
+    {
+        $value = 1;
+        $this->message->setContentAvailable($value);
+        $payload = $this->message->getPayload();
+        $this->assertEquals($value, $payload['aps']['content-available']);
+    }
+
     public function testSetCustomData()
     {
         $data = array('key' => 'val', 'key2' => array(1, 2, 3, 4, 5));
