@@ -152,7 +152,8 @@ abstract class AbstractClient
             throw new Exception\RuntimeException('You must open the connection prior to reading data');
         }
         $data = false;
-        if (!feof($this->socket)) {
+        $stream_meta_data = stream_get_meta_data($this->socket);
+        if ($stream_meta_data['unread_bytes'] > 0) {
             $data = fread($this->socket, (int) $length);
         }
 
