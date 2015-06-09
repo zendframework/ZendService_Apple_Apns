@@ -2,6 +2,25 @@
 
 All notable changes to this project will be documented in this file, in reverse chronological order by release.
 
+## 1.1.0 - TBD
+
+### Added
+
+- [#27](https://github.com/zendframework/ZendService_Apple_Apns/pull/27) Adds in
+  ANS category support.
+
+### Deprecated
+
+- Nothing.
+
+### Removed
+
+- Nothing.
+
+### Fixed
+
+- Nothing.
+
 ## 1.0.6 - TBD
 
 ### Added

@@ -61,6 +61,12 @@ class Message
     protected $contentAvailable;
 
     /**
+     * Category
+     * @var string|null
+     */
+    protected $category;
+
+    /**
      * Custom Attributes
      * @var array|null
      */
@@ -269,6 +275,32 @@ class Message
     }
 
     /**
+     * Get Category
+     *
+     * @return string|null
+     */
+    public function getCategory()
+    {
+        return $this->category;
+    }
+
+    /**
+     * Set Category
+     *
+     * @param  string|null $category
+     * @return Message
+     */
+    public function setCategory($category)
+    {
+        if ($category !== null && !is_string($category)) {
+            throw new Exception\InvalidArgumentException('Category must be null or a string');
+        }
+        $this->category = $category;
+
+        return $this;
+    }
+
+    /**
      * Get Custom Data
      *
      * @return array|null
@@ -317,6 +349,9 @@ class Message
         }
         if (!is_null($this->contentAvailable)) {
             $aps['content-available'] = $this->contentAvailable;
+        }
+        if (!is_null($this->category)) {
+            $aps['category'] = $this->category;
         }
         if (!empty($this->custom)) {
             $message = array_merge($this->custom, $message);
