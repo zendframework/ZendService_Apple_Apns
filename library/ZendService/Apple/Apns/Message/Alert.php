@@ -18,10 +18,28 @@ use ZendService\Apple\Exception;
 class Alert
 {
     /**
+     * Message Title
+     * @var string|null
+     */
+    protected $title;
+    
+    /**
      * Message Body
      * @var string|null
      */
     protected $body;
+    
+    /**
+     * Title Locale Key
+     * @var string|null
+     */
+    protected $titleLocKey;
+    
+    /**
+     * Title Locale Arguments
+     * @var array|null
+     */
+    protected $titleLocArgs;
 
     /**
      * Action Locale Key
@@ -57,10 +75,19 @@ class Alert
      * @param  string $launchImage
      * @return Alert
      */
-    public function __construct($body = null, $actionLocKey = null, $locKey = null, $locArgs = null, $launchImage = null)
+    public function __construct($title = null, $body = null, $titleLocKey = null, $titleLocArgs = null, $actionLocKey = null, $locKey = null, $locArgs = null, $launchImage = null)
     {
+        if ($title !== null) {
+            $this->setTitle($title);
+        }
         if ($body !== null) {
             $this->setBody($body);
+        }
+        if ($titleLocKey !== null) {
+            $this->setTitleLocKey($titleLocKey);
+        }
+        if ($titleLocArgs !== null) {
+            $this->setTitleLocArgs($titleLocArgs);
         }
         if ($actionLocKey !== null) {
             $this->setActionLocKey($actionLocKey);
@@ -74,6 +101,32 @@ class Alert
         if ($launchImage !== null) {
             $this->setLaunchImage($launchImage);
         }
+    }
+    
+    /**
+     * Get Title
+     *
+     * @return string|null
+     */
+    public function getTitle()
+    {
+        return $this->title;
+    }
+
+    /**
+     * Set Title
+     *
+     * @param  string|null $title
+     * @return Alert
+     */
+    public function setTitle($title)
+    {
+        if (!is_null($title) && !is_scalar($title)) {
+            throw new Exception\InvalidArgumentException('Title must be null OR a scalar value');
+        }
+        $this->title = $title;
+
+        return $this;
     }
 
     /**
@@ -98,6 +151,60 @@ class Alert
             throw new Exception\InvalidArgumentException('Body must be null OR a scalar value');
         }
         $this->body = $body;
+
+        return $this;
+    }
+    
+    /**
+     * Get Title Locale Key
+     *
+     * @return string|null
+     */
+    public function getTitleLocKey()
+    {
+        return $this->titleLocKey;
+    }
+
+    /**
+     * Set Title Locale Key
+     *
+     * @param  string|null $key
+     * @return Alert
+     */
+    public function setTitleLocKey($key)
+    {
+        if (!is_null($key) && !is_scalar($key)) {
+            throw new Exception\InvalidArgumentException('TitleLocKey must be null OR a scalar value');
+        }
+        $this->titleLocKey = $key;
+
+        return $this;
+    }
+    
+    /**
+     * Get Title Locale Arguments
+     *
+     * @return array|null
+     */
+    public function getTitleLocArgs()
+    {
+        return $this->titleLocArgs;
+    }
+
+    /**
+     * Set Title Locale Arguments
+     *
+     * @param  array $args
+     * @return Alert
+     */
+    public function setTitleLocArgs(array $args)
+    {
+        foreach ($args as $a) {
+            if (!is_scalar($a)) {
+                throw new Exception\InvalidArgumentException('Title Arguments must only contain scalar values');
+            }
+        }
+        $this->titleLocArgs = $args;
 
         return $this;
     }
@@ -230,7 +337,7 @@ class Alert
         }
 
         if (count($alert) === 1) {
-            return $this->getBody();
+            return $this->getTitle();
         }
 
         return $alert;
