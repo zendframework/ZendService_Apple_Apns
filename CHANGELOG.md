@@ -8,24 +8,8 @@ All notable changes to this project will be documented in this file, in reverse 
 
 - [#27](https://github.com/zendframework/ZendService_Apple_Apns/pull/27) Adds in
   ANS category support.
-
-### Deprecated
-
-- Nothing.
-
-### Removed
-
-- Nothing.
-
-### Fixed
-
-- Nothing.
-
-## 1.0.6 - TBD
-
-### Added
-
-- Nothing.
+- [#29](https://github.com/zendframework/ZendService_Apple_Apns/pull/29) Add in
+  ANS title, title-loc-key and title-loc-args.
 
 ### Deprecated
 

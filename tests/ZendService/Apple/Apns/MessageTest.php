@@ -63,6 +63,18 @@ class MessageTest extends \PHPUnit_Framework_TestCase
         $this->setExpectedException('InvalidArgumentException');
         $this->alert->setLaunchImage(array());
     }
+    
+    public function testSetAlertThrowsExceptionOnTitleNonString()
+    {
+        $this->setExpectedException('InvalidArgumentException');
+        $this->alert->setTitle(array());
+    }
+    
+    public function testSetAlertThrowsExceptionOnTitleLocKeyNonString()
+    {
+        $this->setExpectedException('InvalidArgumentException');
+        $this->alert->setTitleLocKey(array());
+    }
 
     public function testSetBadgeReturnsCorrectNumber()
     {
@@ -169,7 +181,10 @@ class MessageTest extends \PHPUnit_Framework_TestCase
             'PLAY',
             'GAME_PLAY_REQUEST_FORMAT',
             array('Foo', 'Baz'),
-            'Default.png'
+            'Default.png',
+            'Alert',
+            'ALERT',
+            array('Foo', 'Baz')
         );
 
         $this->assertEquals('Foo wants to play Bar!', $alert->getBody());
@@ -177,6 +192,9 @@ class MessageTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('GAME_PLAY_REQUEST_FORMAT', $alert->getLocKey());
         $this->assertEquals(array('Foo', 'Baz'), $alert->getLocArgs());
         $this->assertEquals('Default.png', $alert->getLaunchImage());
+        $this->assertEquals('Alert', $alert->getTitle());
+        $this->assertEquals('ALERT', $alert->getTitleLocKey());
+        $this->assertEquals(array('Foo', 'Baz'), $alert->getTitleLocArgs());
     }
 
     public function testAlertJsonPayload()
@@ -186,7 +204,10 @@ class MessageTest extends \PHPUnit_Framework_TestCase
             'PLAY',
             'GAME_PLAY_REQUEST_FORMAT',
             array('Foo', 'Baz'),
-            'Default.png'
+            'Default.png',
+            'Alert',
+            'ALERT',
+            array('Foo', 'Baz')
         );
         $payload = $alert->getPayload();
 
@@ -195,6 +216,9 @@ class MessageTest extends \PHPUnit_Framework_TestCase
         $this->assertArrayHasKey('loc-key', $payload);
         $this->assertArrayHasKey('loc-args', $payload);
         $this->assertArrayHasKey('launch-image', $payload);
+        $this->assertArrayHasKey('title', $payload);
+        $this->assertArrayHasKey('title-loc-key', $payload);
+        $this->assertArrayHasKey('title-loc-args', $payload);
     }
 
     public function testAlertPayloadSendsOnlyBody()
