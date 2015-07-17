@@ -65,7 +65,11 @@ class Message
      * @var array|null
      */
     protected $custom;
-
+    /**
+     * Message payload
+     * @var array|null
+     */
+    protected $payload;
     /**
      * Get Identifier
      *
@@ -324,8 +328,13 @@ class Message
         if (!empty($aps)) {
             $message['aps'] = $aps;
         }
-
-        return $message;
+	$this->payload = $message;
+        return $this->payload;
+    }
+    
+    public function rawPayload(array $payload = array())
+    {
+	return $this->payload = array_merge($this->getPayload(), $payload);
     }
 
     /**
@@ -335,7 +344,7 @@ class Message
      */
     public function getPayloadJson()
     {
-        $payload = $this->getPayload();
+        $payload = $this->rawPayload();
         // don't escape utf8 payloads unless json_encode does not exist.
         if (defined('JSON_UNESCAPED_UNICODE')) {
             $payload = json_encode($payload, JSON_UNESCAPED_UNICODE);

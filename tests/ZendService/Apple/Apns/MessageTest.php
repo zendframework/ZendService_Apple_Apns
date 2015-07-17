@@ -29,7 +29,7 @@ class MessageTest extends \PHPUnit_Framework_TestCase
         $this->alert = new Alert();
         $this->message = new Message();
     }
-
+    
     public function testSetAlertTextReturnsCorrectly()
     {
         $text = 'my alert';
@@ -222,5 +222,15 @@ class MessageTest extends \PHPUnit_Framework_TestCase
         $payload = $this->message->getPayload();
         $this->assertEquals($payload, array('custom' => 'data'));
     }
-
+    
+    public function testRawPayload()
+    {
+	$data = ['custom'=>'data', 'aps'=>['badge'=>1]];
+	$this->message->setBadge(5);
+	
+	$expected = array('aps'=>array('badge' =>1), 'custom'=>'data');
+	
+	$payload = $this->message->rawPayload($data);
+	$this->assertEquals($payload, $expected);
+    }
 }
