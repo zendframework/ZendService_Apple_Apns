@@ -1,0 +1,22 @@
+# Changelog
+
+All notable changes to this project will be documented in this file, in reverse chronological order by release.
+
+## 1.0.6 - TBD
+
+### Added
+
+- Nothing.
+
+### Deprecated
+
+- Nothing.
+
+### Removed
+
+- Nothing.
+
+### Fixed
+
+- [#28](https://github.com/zendframework/ZendService_Apple_Apns/pull/28) Fixed docblocks
+  that prevented proper code completion in some editors.
