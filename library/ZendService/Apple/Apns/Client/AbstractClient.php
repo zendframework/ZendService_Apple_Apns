@@ -152,7 +152,7 @@ abstract class AbstractClient
             throw new Exception\RuntimeException('You must open the connection prior to reading data');
         }
         $data = false;
-        $read = [$this->socket];
+        $read = array($this->socket);
         $null = null;
 
         if (0 < @stream_select($read, $null, $null, 1, 0)) {
