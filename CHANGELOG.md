@@ -20,7 +20,7 @@ All notable changes to this project will be documented in this file, in reverse 
 
 - Nothing.
 
-## 1.1.1 - TBD
+## 1.1.1 - 2015-10-13
 
 ### Added
 
@@ -36,7 +36,10 @@ All notable changes to this project will be documented in this file, in reverse 
 
 ### Fixed
 
-- Nothing.
+- [#38](https://github.com/zendframework/ZendService_Apple_Apns/pull/38) Fix
+  apns error response when sending a message.
+- [#34](https://github.com/zendframework/ZendService_Apple_Apns/pull/34) Fixed
+  unit tests execution on travis
 
 ## 1.1.0 - 2015-07-29
 
