@@ -22,7 +22,6 @@ use ZendServiceTest\Apple\Apns\TestAsset\FeedbackClient;
  */
 class FeedbackClientTest extends \PHPUnit_Framework_TestCase
 {
-
     public function setUp()
     {
         $this->apns = new FeedbackClient();
@@ -46,5 +45,4 @@ class FeedbackClientTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($time, $feedback->getTime());
         $this->assertEquals($token, $feedback->getToken());
     }
-
 }

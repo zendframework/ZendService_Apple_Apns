@@ -104,5 +104,4 @@ class Feedback
 
         return $this;
     }
-
 }

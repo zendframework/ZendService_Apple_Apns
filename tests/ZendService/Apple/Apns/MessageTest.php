@@ -265,5 +265,4 @@ class MessageTest extends \PHPUnit_Framework_TestCase
         $payload = $this->message->getPayload();
         $this->assertEquals($payload, array('custom' => 'data'));
     }
-
 }
