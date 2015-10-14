@@ -116,7 +116,6 @@ class Message
      */
     public function setToken($token)
     {
-
         if (!is_string($token)) {
             throw new Exception\InvalidArgumentException(sprintf(
                     'Device token must be a string, "%s" given.',

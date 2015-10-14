@@ -12,5 +12,4 @@ namespace ZendService\Apple\Exception;
 
 class RuntimeException extends \RuntimeException
 {
-
 }

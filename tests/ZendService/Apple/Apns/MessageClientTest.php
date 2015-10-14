@@ -26,7 +26,6 @@ use ZendService\Apple\Apns\Response\Message as MessageResponse;
  */
 class MessageClientTest extends \PHPUnit_Framework_TestCase
 {
-
     public function setUp()
     {
         $this->apns = new MessageClient();
