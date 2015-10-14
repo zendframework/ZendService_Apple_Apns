@@ -15,5 +15,4 @@ namespace ZendService\Apple\Exception;
  */
 class InvalidArgumentException extends \InvalidArgumentException
 {
-
 }

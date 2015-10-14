@@ -16,7 +16,7 @@ use ZendService\Apple\Exception;
  * Message Alert Object
  */
 class Alert
-{   
+{
     /**
      * Message Body
      * @var string|null
