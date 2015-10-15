@@ -167,6 +167,13 @@ class MessageTest extends \PHPUnit_Framework_TestCase
         $this->message->setCategory(12345);
     }
 
+    public function testSetUrlArgsReturnsString()
+    {
+        $urlArgs = array('path/to/somewhere');
+        $this->message->setUrlArgs($urlArgs);
+        $this->assertEquals($urlArgs, $this->message->getUrlArgs());
+    }
+
     public function testSetCustomData()
     {
         $data = array('key' => 'val', 'key2' => array(1, 2, 3, 4, 5));
