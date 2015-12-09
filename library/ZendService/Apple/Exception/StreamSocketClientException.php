@@ -10,5 +10,4 @@ use ErrorException;
 
 class StreamSocketClientException extends ErrorException
 {
-
 }

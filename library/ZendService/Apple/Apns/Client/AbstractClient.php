@@ -91,7 +91,7 @@ abstract class AbstractClient
      */
     protected function connect($host, array $ssl)
     {
-        set_error_handler(function($errno, $errstr, $errfile, $errline){
+        set_error_handler(function ($errno, $errstr, $errfile, $errline) {
             throw new StreamSocketClientException($errstr, $errno, 1, $errfile, $errline);
         });
 
