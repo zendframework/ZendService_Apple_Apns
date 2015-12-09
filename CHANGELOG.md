@@ -18,7 +18,8 @@ All notable changes to this project will be documented in this file, in reverse 
 
 ### Fixed
 
-- Nothing.
+- [#40](https://github.com/zendframework/ZendService_Apple_Apns/pull/40) Add
+  missing return $this
 
 ## 1.1.1 - 2015-10-13
 
