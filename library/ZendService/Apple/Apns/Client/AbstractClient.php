@@ -11,6 +11,7 @@
 namespace ZendService\Apple\Apns\Client;
 
 use ZendService\Apple\Exception;
+use ZendService\Apple\Exception\StreamSocketClientException;
 
 /**
  * Apple Push Notification Abstract Client
@@ -90,16 +91,33 @@ abstract class AbstractClient
      */
     protected function connect($host, array $ssl)
     {
-        $this->socket = stream_socket_client(
-            $host,
-            $errno,
-            $errstr,
-            ini_get('default_socket_timeout'),
-            STREAM_CLIENT_CONNECT,
-            stream_context_create(array(
-                'ssl' => $ssl,
-            ))
-        );
+        set_error_handler(function ($errno, $errstr, $errfile, $errline) {
+            throw new StreamSocketClientException($errstr, $errno, 1, $errfile, $errline);
+        });
+
+        try {
+            $this->socket = stream_socket_client(
+                $host,
+                $errno,
+                $errstr,
+                ini_get('default_socket_timeout'),
+                STREAM_CLIENT_CONNECT,
+                stream_context_create(
+                    array(
+                        'ssl' => $ssl,
+                    )
+                )
+            );
+        } catch (StreamSocketClientException $e) {
+            throw new Exception\RuntimeException(sprintf(
+                'Unable to connect: %s: %d (%s)',
+                $host,
+                $e->getCode(),
+                $e->getMessage()
+            ));
+        }
+
+        restore_error_handler();
 
         if (!$this->socket) {
             throw new Exception\RuntimeException(sprintf(
