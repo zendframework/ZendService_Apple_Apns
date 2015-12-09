@@ -17,7 +17,6 @@
             "ZendService\\Apple\\Exception\\": "library/"
         }
     },
-    "minimum-stability": "dev",
     "repositories": [
         {
             "type": "composer",
