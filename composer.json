@@ -20,7 +20,7 @@
     "repositories": [
         {
             "type": "composer",
-            "url": "http://packages.zendframework.com/"
+            "url": "https://packages.zendframework.com/"
         }
     ],
     "require": {
