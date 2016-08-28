@@ -22,6 +22,12 @@ class Alert
      * @var string|null
      */
     protected $body;
+    
+    /**
+     * Action
+     * @var string|null
+     */
+    protected $action;
 
     /**
      * Action Locale Key
@@ -125,6 +131,32 @@ class Alert
             throw new Exception\InvalidArgumentException('Body must be null OR a scalar value');
         }
         $this->body = $body;
+
+        return $this;
+    }
+    
+    /**
+     * Get Action
+     *
+     * @return string|null
+     */
+    public function getAction()
+    {
+        return $this->action;
+    }
+
+    /**
+     * Set Action
+     *
+     * @param  string|null $key
+     * @return Alert
+     */
+    public function setAction($key)
+    {
+        if (!is_null($key) && !is_scalar($key)) {
+            throw new Exception\InvalidArgumentException('Action must be null OR a scalar value');
+        }
+        $this->action = $key;
 
         return $this;
     }
