@@ -55,6 +55,12 @@ class Message
     protected $sound;
 
     /**
+     * Mutable Content
+     * @var int|null
+     */
+    protected $mutableContent;
+
+    /**
      * Content Available
      * @var int|null
      */
@@ -256,6 +262,32 @@ class Message
     }
 
     /**
+     * Get Mutable Content
+     * 
+     * @return int|null
+     */
+    public function getMutableContent()
+    {
+        return $this->mutableContent;
+    }
+
+    /**
+     * Set Mutable Content
+     * 
+     * @param int|null $value
+     * @returns Message
+     */
+    public function setMutableContent($value)
+    {
+        if ($value !== null && !is_int($value)) {
+            throw new Exception\InvalidArgumentException('Mutable Content must be null or an integer');
+        }
+        $this->mutableContent = $value;
+
+        return $this;
+    }
+
+    /**
      * Get Content Available
      *
      * @return int|null
@@ -268,7 +300,7 @@ class Message
     /**
      * Set Content Available
      *
-     * @param  int|null $sound
+     * @param  int|null $value
      * @return Message
      */
     public function setContentAvailable($value)
@@ -376,6 +408,9 @@ class Message
         }
         if (!is_null($this->sound)) {
             $aps['sound'] = $this->sound;
+        }
+        if (!is_null($this->mutableContent)) {
+            $aps['mutable-content'] = $this->mutableContent;
         }
         if (!is_null($this->contentAvailable)) {
             $aps['content-available'] = $this->contentAvailable;

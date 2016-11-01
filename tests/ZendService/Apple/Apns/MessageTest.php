@@ -127,6 +127,27 @@ class MessageTest extends \PHPUnit_Framework_TestCase
         $this->message->setSound(12345);
     }
 
+    public function testSetMutableContentThrowsExceptionOnNonInteger()
+    {
+        $this->setExpectedException('InvalidArgumentException');
+        $this->message->setMutableContent("string");
+    }
+
+    public function testGetMutableContentReturnsCorrectInteger()
+    {
+        $value = 1;
+        $this->message->setMutableContent($value);
+        $this->assertEquals($value, $this->message->getMutableContent());
+    }
+
+    public function testSetMutableContentResultsInCorrectPayload()
+    {
+        $value = 1;
+        $this->message->setMutableContent($value);
+        $payload = $this->message->getPayload();
+        $this->assertEquals($value, $payload['aps']['mutable-content']);
+    }
+
     public function testSetContentAvailableThrowsExceptionOnNonInteger()
     {
         $this->setExpectedException('InvalidArgumentException');
