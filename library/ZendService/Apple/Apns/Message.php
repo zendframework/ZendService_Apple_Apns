@@ -387,7 +387,7 @@ class Message
             $aps['url-args'] = $this->urlArgs;
         }
         if (!empty($this->custom)) {
-            $message = array_merge($this->custom, $message);
+            $aps = array_merge($this->custom, $aps);
         }
         if (!empty($aps)) {
             $message['aps'] = $aps;
