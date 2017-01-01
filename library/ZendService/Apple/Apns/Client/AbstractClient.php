@@ -109,6 +109,7 @@ abstract class AbstractClient
                 )
             );
         } catch (StreamSocketClientException $e) {
+            restore_error_handler();
             throw new Exception\RuntimeException(sprintf(
                 'Unable to connect: %s: %d (%s)',
                 $host,
