@@ -53,7 +53,17 @@ class Message
      * @var string|null
      */
     protected $sound;
+	
+    /**
+     * Content Available
+	 * Provide this key with a value of 1 to indicate that new content is available. This is used to support Newsstand apps and background content downloads.
+	 * Newsstand apps are guaranteed to be able to receive at least one push with this key per 24-hour window.
+	 * @see https://developer.apple.com/library/ios/documentation/NetworkingInternet/Conceptual/RemoteNotificationsPG/Chapters/ApplePushService.html	
+     * @var int|null
+     */
+    protected $content_available;
 
+	
     /**
      * Content Available
      * @var int|null
@@ -78,6 +88,7 @@ class Message
      */
     protected $custom;
 
+	
     /**
      * Get Identifier
      *
@@ -173,6 +184,31 @@ class Message
             throw new Exception\InvalidArgumentException('Expiration must be a DateTime object or a unix timestamp');
         }
         $this->expire = $expire;
+
+        return $this;
+    }
+	    /**
+     * Get Content  Available
+     *
+     * @return int
+     */
+    public function getContentAvailable()
+    {
+        return $this->content_available;
+    }
+
+    /**
+     * Set Content  Available
+     *
+     * @param  int $content_available
+     * @return Message
+     */
+    public function setContentAvailable($content_available)
+    {
+        if (!is_numeric($content_available) || $content_available != (int) $content_available) {
+            throw new Exception\InvalidArgumentException('Content  Available must be a number');
+        }
+        $this->content_available = $content_available;
 
         return $this;
     }
@@ -386,6 +422,9 @@ class Message
         if (!is_null($this->urlArgs)) {
             $aps['url-args'] = $this->urlArgs;
         }
+		if (!is_null($this->content_available)) {
+            $message['aps']['content-available'] = $this->content_available;
+        }
         if (!empty($this->custom)) {
             $message = array_merge($this->custom, $message);
         }
@@ -405,12 +444,13 @@ class Message
     {
         $payload = $this->getPayload();
         // don't escape utf8 payloads unless json_encode does not exist.
-        if (defined('JSON_UNESCAPED_UNICODE')) {
+        if (defined('JSON_UNESCAPED_UNICODE') && function_exists('mb_strlen')) {
             $payload = json_encode($payload, JSON_UNESCAPED_UNICODE);
+            $length = mb_strlen($payload, 'UTF-8');
         } else {
             $payload = JsonEncoder::encode($payload);
+            $length = strlen($payload);
         }
-        $length = strlen($payload);
 
         return pack('CNNnH*', 1, $this->id, $this->expire, 32, $this->token)
             . pack('n', $length)
