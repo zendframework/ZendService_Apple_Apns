@@ -56,7 +56,7 @@ abstract class AbstractClient
     public function open($environment, $certificate, $passPhrase = null)
     {
         if ($this->isConnected) {
-            throw new Exception\RuntimeException('Connection has already been opened and must be closed');
+            return true;
         }
 
         if (!array_key_exists($environment, $this->uris)) {
