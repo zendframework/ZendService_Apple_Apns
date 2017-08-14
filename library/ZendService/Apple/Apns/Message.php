@@ -10,8 +10,8 @@
 
 namespace ZendService\Apple\Apns;
 
-use ZendService\Apple\Exception;
 use Zend\Json\Encoder as JsonEncoder;
+use ZendService\Apple\Exception;
 
 /**
  * APNs Message
@@ -58,7 +58,7 @@ class Message
      * Mutable Content
      * @var int|null
      */
-    protected $mutableContent;
+    private $mutableContent;
 
     /**
      * Content Available
@@ -262,25 +262,17 @@ class Message
     }
 
     /**
-     * Get Mutable Content
-     * 
-     * @return int|null
-     */
-    public function getMutableContent()
-    {
-        return $this->mutableContent;
-    }
-
-    /**
      * Set Mutable Content
-     * 
+     *
      * @param int|null $value
      * @returns Message
      */
     public function setMutableContent($value)
     {
         if ($value !== null && !is_int($value)) {
-            throw new Exception\InvalidArgumentException('Mutable Content must be null or an integer');
+            throw new Exception\InvalidArgumentException(
+                'Mutable Content must be null or an integer, received: ' . gettype($value)
+            );
         }
         $this->mutableContent = $value;
 
