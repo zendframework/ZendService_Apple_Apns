@@ -10,8 +10,8 @@
 
 namespace ZendService\Apple\Apns;
 
-use ZendService\Apple\Exception;
 use Zend\Json\Encoder as JsonEncoder;
+use ZendService\Apple\Exception;
 
 /**
  * APNs Message
@@ -53,6 +53,12 @@ class Message
      * @var string|null
      */
     protected $sound;
+
+    /**
+     * Mutable Content
+     * @var int|null
+     */
+    private $mutableContent;
 
     /**
      * Content Available
@@ -256,6 +262,29 @@ class Message
     }
 
     /**
+     * Set Mutable Content
+     *
+     * @param int|null $value
+     * @returns Message
+     */
+    public function setMutableContent($value)
+    {
+        if ($value !== null && !is_int($value)) {
+            throw new Exception\InvalidArgumentException(
+                'Mutable Content must be null or an integer, received: ' . gettype($value)
+            );
+        }
+
+        if (is_int($value) && $value !== 1) {
+            throw new Exception\InvalidArgumentException('Mutable Content supports only 1 as integer value');
+        }
+
+        $this->mutableContent = $value;
+
+        return $this;
+    }
+
+    /**
      * Get Content Available
      *
      * @return int|null
@@ -268,7 +297,7 @@ class Message
     /**
      * Set Content Available
      *
-     * @param  int|null $sound
+     * @param  int|null $value
      * @return Message
      */
     public function setContentAvailable($value)
@@ -376,6 +405,9 @@ class Message
         }
         if (!is_null($this->sound)) {
             $aps['sound'] = $this->sound;
+        }
+        if (!is_null($this->mutableContent)) {
+            $aps['mutable-content'] = $this->mutableContent;
         }
         if (!is_null($this->contentAvailable)) {
             $aps['content-available'] = $this->contentAvailable;
