@@ -274,6 +274,11 @@ class Message
                 'Mutable Content must be null or an integer, received: ' . gettype($value)
             );
         }
+
+        if (is_int($value) && $value !== 1) {
+            throw new Exception\InvalidArgumentException('Mutable Content supports only 1 as integer value');
+        }
+
         $this->mutableContent = $value;
 
         return $this;

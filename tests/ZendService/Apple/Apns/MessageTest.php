@@ -128,11 +128,11 @@ class MessageTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @dataProvider provideSetMutableContentThrowsExceptionOnNonIntegerOrNullData
+     * @dataProvider provideSetMutableContentThrowsExceptionOnNonIntegerOneOrNullData
      *
      * @param mixed $value
      */
-    public function testSetMutableContentThrowsExceptionOnNonIntegerAndNull($value)
+    public function testSetMutableContentThrowsExceptionOnNonIntegerOneAndNull($value)
     {
         $this->setExpectedException('InvalidArgumentException');
         $this->message->setMutableContent($value);
@@ -141,22 +141,25 @@ class MessageTest extends \PHPUnit_Framework_TestCase
     /**
      * @return array
      */
-    public function provideSetMutableContentThrowsExceptionOnNonIntegerOrNullData()
+    public function provideSetMutableContentThrowsExceptionOnNonIntegerOneOrNullData()
     {
         return array(
-            'boolean' => array(
+            'unsupported integer value' => array(
+                'value' => 2,
+            ),
+            'boolean'                   => array(
                 'value' => true,
             ),
-            'string'  => array(
+            'string'                    => array(
                 'value' => 'any string',
             ),
-            'float'   => array(
+            'float'                     => array(
                 'value' => 123.12,
             ),
-            'array'   => array(
+            'array'                     => array(
                 'value' => array(),
             ),
-            'object'  => array(
+            'object'                    => array(
                 'value' => new \stdClass(),
             ),
         );
