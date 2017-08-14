@@ -144,22 +144,28 @@ class MessageTest extends \PHPUnit_Framework_TestCase
     public function provideSetMutableContentThrowsExceptionOnNonIntegerOneOrNullData()
     {
         return array(
-            'unsupported integer value' => array(
+            'unsupported positive integer' => array(
                 'value' => 2,
             ),
-            'boolean'                   => array(
+            'zero integer'                 => array(
+                'value' => 0,
+            ),
+            'negative integer'             => array(
+                'value' => -1,
+            ),
+            'boolean'                      => array(
                 'value' => true,
             ),
-            'string'                    => array(
+            'string'                       => array(
                 'value' => 'any string',
             ),
-            'float'                     => array(
+            'float'                        => array(
                 'value' => 123.12,
             ),
-            'array'                     => array(
+            'array'                        => array(
                 'value' => array(),
             ),
-            'object'                    => array(
+            'object'                       => array(
                 'value' => new \stdClass(),
             ),
         );
