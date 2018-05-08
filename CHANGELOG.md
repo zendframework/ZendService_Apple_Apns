@@ -6,6 +6,8 @@ All notable changes to this project will be documented in this file, in reverse 
 
 ### Added
 
+- [#53](https://github.com/zendframework/ZendService_Apple_Apns/pull/53) adds support for the mutable-content Notification field within the `Message` implementation.
+
 - [#48](https://github.com/zendframework/ZendService_Apple_Apns/pull/48) adds two new methods to `ZendService\Apple\Apns\Message\Alert`: `setAction($key)` and `getAction()`.
   These allow specifying an action property for notifications.
 
