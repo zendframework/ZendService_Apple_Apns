@@ -167,7 +167,8 @@ class MessageTest extends \PHPUnit_Framework_TestCase
     public function testSetMutableContentResultsInCorrectPayloadWithNullValue()
     {
         $this->message->setMutableContent(null);
-        $payload = $this->message->getPayload();
+        $json = $this->message->getPayloadJson();
+        $payload = json_decode($json, true);
         $this->assertFalse(isset($payload['aps']['mutable-content']));
     }
 
