@@ -264,13 +264,14 @@ class MessageTest extends \PHPUnit_Framework_TestCase
         }
     }
 
-    public function testCustomDataPayloadDoesNotIncludeEmptyApsData()
+    public function testCustomDataPayloadIncludesEmptyApsObject()
     {
         $data = array('custom' => 'data');
+        $expected = array_merge($data, array('aps' => (object) array()));
         $this->message->setCustom($data);
 
         $payload = $this->message->getPayload();
-        $this->assertEquals($payload, array('custom' => 'data'));
+        $this->assertEquals($expected, $payload);
     }
 
     public function testTokensAllowUpperCaseHex()

@@ -23,6 +23,10 @@ All notable changes to this project will be documented in this file, in reverse 
 
 ### Fixed
 
+- [#49](https://github.com/zendframework/ZendService_Apple_Apns/pull/49) fixes how `Message::getPayload()` and `Message::getPayloadJson()` create a
+  representation of the `aps` key when it is an empty value. With #18, the value was removed,
+  which was incorrect; it is not rendered as an empty object.
+
 - [#62](https://github.com/zendframework/ZendService_Apple_Apns/pull/62) modifies the `AbstractClient::connect()` method such that it now
   restores the previous error handler after catching a socket-related connection exception.
 
