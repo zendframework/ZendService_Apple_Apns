@@ -10,6 +10,7 @@
 
 namespace ZendServiceTest\Apple\Apns\TestAsset;
 
+use stdClass;
 use Zend\Json\Encoder as JsonEncoder;
 use ZendService\Apple\Apns\Message;
 use ZendService\Apple\Apns\Message\Alert;
@@ -144,30 +145,14 @@ class MessageTest extends \PHPUnit_Framework_TestCase
     public function provideSetMutableContentThrowsExceptionOnNonIntegerOneOrNullData()
     {
         return array(
-            'unsupported positive integer' => array(
-                'value' => 2,
-            ),
-            'zero integer'                 => array(
-                'value' => 0,
-            ),
-            'negative integer'             => array(
-                'value' => -1,
-            ),
-            'boolean'                      => array(
-                'value' => true,
-            ),
-            'string'                       => array(
-                'value' => 'any string',
-            ),
-            'float'                        => array(
-                'value' => 123.12,
-            ),
-            'array'                        => array(
-                'value' => array(),
-            ),
-            'object'                       => array(
-                'value' => new \stdClass(),
-            ),
+            'unsupported positive integer' => array('value' => 2),
+            'zero integer'                 => array('value' => 0),
+            'negative integer'             => array('value' => -1),
+            'boolean'                      => array('value' => true),
+            'string'                       => array('value' => 'any string'),
+            'float'                        => array('value' => 123.12),
+            'array'                        => array('value' => array()),
+            'object'                       => array('value' => new stdClass()),
         );
     }
 
