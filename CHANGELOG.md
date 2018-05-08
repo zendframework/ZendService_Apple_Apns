@@ -22,7 +22,8 @@ All notable changes to this project will be documented in this file, in reverse 
 
 ### Fixed
 
-- Nothing.
+- [#62](https://github.com/zendframework/ZendService_Apple_Apns/pull/62) modifies the `AbstractClient::connect()` method such that it now
+  restores the previous error handler after catching a socket-related connection exception.
 
 ## 1.2.0 - 2015-12-09
 
