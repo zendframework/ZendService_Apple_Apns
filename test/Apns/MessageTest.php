@@ -7,6 +7,7 @@
 
 namespace ZendServiceTest\Apple\Apns;
 
+use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 use stdClass;
 use Zend\Json\Encoder as JsonEncoder;
@@ -41,37 +42,37 @@ class MessageTest extends TestCase
 
     public function testSetAlertThrowsExceptionOnTextNonString()
     {
-        $this->expectException('InvalidArgumentException');
+        $this->expectException(InvalidArgumentException::class);
         $this->message->setAlert(array());
     }
 
     public function testSetAlertThrowsExceptionOnActionLocKeyNonString()
     {
-        $this->expectException('InvalidArgumentException');
+        $this->expectException(InvalidArgumentException::class);
         $this->alert->setActionLocKey(array());
     }
 
     public function testSetAlertThrowsExceptionOnLocKeyNonString()
     {
-        $this->expectException('InvalidArgumentException');
+        $this->expectException(InvalidArgumentException::class);
         $this->alert->setLocKey(array());
     }
 
     public function testSetAlertThrowsExceptionOnLaunchImageNonString()
     {
-        $this->expectException('InvalidArgumentException');
+        $this->expectException(InvalidArgumentException::class);
         $this->alert->setLaunchImage(array());
     }
 
     public function testSetAlertThrowsExceptionOnTitleNonString()
     {
-        $this->expectException('InvalidArgumentException');
+        $this->expectException(InvalidArgumentException::class);
         $this->alert->setTitle(array());
     }
 
     public function testSetAlertThrowsExceptionOnTitleLocKeyNonString()
     {
-        $this->expectException('InvalidArgumentException');
+        $this->expectException(InvalidArgumentException::class);
         $this->alert->setTitleLocKey(array());
     }
 
@@ -84,7 +85,7 @@ class MessageTest extends TestCase
 
     public function testSetBadgeNonNumericThrowsException()
     {
-        $this->expectException('InvalidArgumentException');
+        $this->expectException(InvalidArgumentException::class);
         $this->message->setBadge('string!');
     }
 
@@ -103,7 +104,7 @@ class MessageTest extends TestCase
 
     public function testSetExpireNonNumericThrowsException()
     {
-        $this->expectException('InvalidArgumentException');
+        $this->expectException(InvalidArgumentException::class);
         $this->message->setExpire('sting!');
     }
 
@@ -116,13 +117,13 @@ class MessageTest extends TestCase
 
     public function testSetSoundThrowsExceptionOnNonScalar()
     {
-        $this->expectException('InvalidArgumentException');
+        $this->expectException(InvalidArgumentException::class);
         $this->message->setSound(array());
     }
 
     public function testSetSoundThrowsExceptionOnNonString()
     {
-        $this->expectException('InvalidArgumentException');
+        $this->expectException(InvalidArgumentException::class);
         $this->message->setSound(12345);
     }
 
@@ -133,7 +134,7 @@ class MessageTest extends TestCase
      */
     public function testSetMutableContentThrowsExceptionOnNonIntegerOneAndNull($value)
     {
-        $this->setExpectedException('InvalidArgumentException');
+        $this->expectException(InvalidArgumentException::class);
         $this->message->setMutableContent($value);
     }
 
@@ -172,7 +173,7 @@ class MessageTest extends TestCase
 
     public function testSetContentAvailableThrowsExceptionOnNonInteger()
     {
-        $this->expectException('InvalidArgumentException');
+        $this->expectException(InvalidArgumentException::class);
         $this->message->setContentAvailable("string");
     }
 
@@ -200,13 +201,13 @@ class MessageTest extends TestCase
 
     public function testSetCategoryThrowsExceptionOnNonScalar()
     {
-        $this->expectException('InvalidArgumentException');
+        $this->expectException(InvalidArgumentException::class);
         $this->message->setCategory(array());
     }
 
     public function testSetCategoryThrowsExceptionOnNonString()
     {
-        $this->expectException('InvalidArgumentException');
+        $this->expectException(InvalidArgumentException::class);
         $this->message->setCategory(12345);
     }
 
