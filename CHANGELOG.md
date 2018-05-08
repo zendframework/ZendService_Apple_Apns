@@ -8,23 +8,9 @@ All notable changes to this project will be documented in this file, in reverse 
 
 - Nothing.
 
-### Deprecated
+### Changed
 
-- Nothing.
-
-### Removed
-
-- Nothing.
-
-### Fixed
-
-- Nothing.
-
-## 1.2.1 - TBD
-
-### Added
-
-- Nothing.
+- [#42](https://github.com/zendframework/ZendService_Apple_Apns/pull/42) modifies the allowed character set for tokens to include uppercase A-F.
 
 ### Deprecated
 

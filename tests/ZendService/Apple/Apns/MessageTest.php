@@ -272,4 +272,11 @@ class MessageTest extends \PHPUnit_Framework_TestCase
         $payload = $this->message->getPayload();
         $this->assertEquals($payload, array('custom' => 'data'));
     }
+
+    public function testTokensAllowUpperCaseHex()
+    {
+        $token = str_repeat('abc1234defABCDEF', 4);
+        $this->message->setToken($token);
+        $this->assertSame($token, $this->message->getToken());
+    }
 }
