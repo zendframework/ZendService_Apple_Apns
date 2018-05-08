@@ -389,7 +389,8 @@ class Message
         if (!empty($this->custom)) {
             $message = array_merge($this->custom, $message);
         }
-        $message['aps'] = (object)$aps;
+
+        $message['aps'] = empty($aps) ? (object) array() : $aps;
 
         return $message;
     }
