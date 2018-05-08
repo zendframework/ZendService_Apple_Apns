@@ -22,10 +22,10 @@ class Feedback extends AbstractClient
      * APNS URIs
      * @var array
      */
-    protected $uris = array(
+    protected $uris = [
         'tls://feedback.sandbox.push.apple.com:2196',
         'tls://feedback.push.apple.com:2196'
-    );
+    ];
 
     /**
      * Get Feedback
@@ -34,11 +34,11 @@ class Feedback extends AbstractClient
      */
     public function feedback()
     {
-        if (!$this->isConnected()) {
+        if (! $this->isConnected()) {
             throw new Exception\RuntimeException('You must first open the connection by calling open()');
         }
 
-        $tokens = array();
+        $tokens = [];
         while ($token = $this->read(38)) {
             $tokens[] = new FeedbackResponse($token);
         }

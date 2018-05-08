@@ -11,17 +11,17 @@
 namespace ZendServiceTest\Apple\Apns\TestAsset;
 
 use ZendService\Apple\Apns\Exception;
-use ZendService\Apple\Apns\Client\Feedback as ZfFeedbackClient;
+use ZendService\Apple\Apns\Client\Message as ZfMessageClient;
 
 /**
- * Feedback Client Proxy
+ * Message Client Proxy
  * This class is utilized for unit testing purposes
  *
  * @category   ZendService
  * @package    ZendService_Apple
  * @subpackage Apns
  */
-class FeedbackClient extends ZfFeedbackClient
+class MessageClient extends ZfMessageClient
 {
     /**
      * Read Response
@@ -40,8 +40,8 @@ class FeedbackClient extends ZfFeedbackClient
     /**
      * Set the Response
      *
-     * @param  string         $str
-     * @return FeedbackClient
+     * @param  string        $str
+     * @return MessageClient
      */
     public function setReadResponse($str)
     {
@@ -53,8 +53,8 @@ class FeedbackClient extends ZfFeedbackClient
     /**
      * Set the write response
      *
-     * @param  mixed          $resp
-     * @return FeedbackClient
+     * @param  mixed         $resp
+     * @return MessageClient
      */
     public function setWriteResponse($resp)
     {
@@ -66,7 +66,7 @@ class FeedbackClient extends ZfFeedbackClient
     /**
      * Connect to Host
      *
-     * @return FeedbackClient
+     * @return MessageClient
      */
     protected function connect($host, array $ssl)
     {
@@ -81,7 +81,7 @@ class FeedbackClient extends ZfFeedbackClient
      */
     protected function read($length = 1024)
     {
-        if (!$this->isConnected()) {
+        if (! $this->isConnected()) {
             throw new Exception\RuntimeException('You must open the connection prior to reading data');
         }
         $ret = substr($this->readResponse, 0, $length);
@@ -98,7 +98,7 @@ class FeedbackClient extends ZfFeedbackClient
      */
     protected function write($payload)
     {
-        if (!$this->isConnected()) {
+        if (! $this->isConnected()) {
             throw new Exception\RuntimeException('You must open the connection prior to writing data');
         }
         $ret = $this->writeResponse;

@@ -10,6 +10,7 @@
 
 namespace ZendServiceTest\Apple\Apns;
 
+use PHPUnit\Framework\TestCase;
 use ZendServiceTest\Apple\Apns\TestAsset\FeedbackClient;
 
 /**
@@ -20,7 +21,7 @@ use ZendServiceTest\Apple\Apns\TestAsset\FeedbackClient;
  * @group      ZendService_Apple
  * @group      ZendService_Apple_Apns
  */
-class FeedbackClientTest extends \PHPUnit_Framework_TestCase
+class FeedbackClientTest extends TestCase
 {
     public function setUp()
     {

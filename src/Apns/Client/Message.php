@@ -29,10 +29,10 @@ class Message extends AbstractClient
      * APNS URIs
      * @var array
      */
-    protected $uris = array(
+    protected $uris = [
         'tls://gateway.sandbox.push.apple.com:2195',
         'tls://gateway.push.apple.com:2195',
-    );
+    ];
 
     /**
      * Send Message
@@ -42,7 +42,7 @@ class Message extends AbstractClient
      */
     public function send(ApnsMessage $message)
     {
-        if (!$this->isConnected()) {
+        if (! $this->isConnected()) {
             throw new Exception\RuntimeException('You must first open the connection by calling open()');
         }
 

@@ -2,9 +2,11 @@
 
 All notable changes to this project will be documented in this file, in reverse chronological order by release.
 
-## 1.3.0 - TBD
+## 1.3.0 - 2018-05-08
 
 ### Added
+
+- [#63](https://github.com/zendframework/ZendService_Apple_Apns/pull/63) adds support for PHP 7.1 and 7.2.
 
 - [#53](https://github.com/zendframework/ZendService_Apple_Apns/pull/53) adds support for the mutable-content Notification field within the `Message` implementation.
 
@@ -21,7 +23,9 @@ All notable changes to this project will be documented in this file, in reverse 
 
 ### Removed
 
-- Nothing.
+- [#63](https://github.com/zendframework/ZendService_Apple_Apns/pull/63) removes support for PHP 5.3, 5.4, and 5.5.
+
+- [#63](https://github.com/zendframework/ZendService_Apple_Apns/pull/63) removes support for HHVM.
 
 ### Fixed
 
