@@ -81,7 +81,7 @@ class FeedbackClient extends ZfFeedbackClient
      */
     protected function read($length = 1024)
     {
-        if (!$this->isConnected()) {
+        if (! $this->isConnected()) {
             throw new Exception\RuntimeException('You must open the connection prior to reading data');
         }
         $ret = substr($this->readResponse, 0, $length);
@@ -98,7 +98,7 @@ class FeedbackClient extends ZfFeedbackClient
      */
     protected function write($payload)
     {
-        if (!$this->isConnected()) {
+        if (! $this->isConnected()) {
             throw new Exception\RuntimeException('You must open the connection prior to writing data');
         }
         $ret = $this->writeResponse;

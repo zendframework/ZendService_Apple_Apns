@@ -43,37 +43,37 @@ class MessageTest extends TestCase
     public function testSetAlertThrowsExceptionOnTextNonString()
     {
         $this->expectException(InvalidArgumentException::class);
-        $this->message->setAlert(array());
+        $this->message->setAlert([]);
     }
 
     public function testSetAlertThrowsExceptionOnActionLocKeyNonString()
     {
         $this->expectException(InvalidArgumentException::class);
-        $this->alert->setActionLocKey(array());
+        $this->alert->setActionLocKey([]);
     }
 
     public function testSetAlertThrowsExceptionOnLocKeyNonString()
     {
         $this->expectException(InvalidArgumentException::class);
-        $this->alert->setLocKey(array());
+        $this->alert->setLocKey([]);
     }
 
     public function testSetAlertThrowsExceptionOnLaunchImageNonString()
     {
         $this->expectException(InvalidArgumentException::class);
-        $this->alert->setLaunchImage(array());
+        $this->alert->setLaunchImage([]);
     }
 
     public function testSetAlertThrowsExceptionOnTitleNonString()
     {
         $this->expectException(InvalidArgumentException::class);
-        $this->alert->setTitle(array());
+        $this->alert->setTitle([]);
     }
 
     public function testSetAlertThrowsExceptionOnTitleLocKeyNonString()
     {
         $this->expectException(InvalidArgumentException::class);
-        $this->alert->setTitleLocKey(array());
+        $this->alert->setTitleLocKey([]);
     }
 
     public function testSetBadgeReturnsCorrectNumber()
@@ -118,7 +118,7 @@ class MessageTest extends TestCase
     public function testSetSoundThrowsExceptionOnNonScalar()
     {
         $this->expectException(InvalidArgumentException::class);
-        $this->message->setSound(array());
+        $this->message->setSound([]);
     }
 
     public function testSetSoundThrowsExceptionOnNonString()
@@ -143,16 +143,16 @@ class MessageTest extends TestCase
      */
     public function provideSetMutableContentThrowsExceptionOnNonIntegerOneOrNullData()
     {
-        return array(
-            'unsupported positive integer' => array('value' => 2),
-            'zero integer'                 => array('value' => 0),
-            'negative integer'             => array('value' => -1),
-            'boolean'                      => array('value' => true),
-            'string'                       => array('value' => 'any string'),
-            'float'                        => array('value' => 123.12),
-            'array'                        => array('value' => array()),
-            'object'                       => array('value' => new stdClass()),
-        );
+        return [
+            'unsupported positive integer' => ['value' => 2],
+            'zero integer'                 => ['value' => 0],
+            'negative integer'             => ['value' => -1],
+            'boolean'                      => ['value' => true],
+            'string'                       => ['value' => 'any string'],
+            'float'                        => ['value' => 123.12],
+            'array'                        => ['value' => []],
+            'object'                       => ['value' => new stdClass()],
+        ];
     }
 
     public function testSetMutableContentResultsInCorrectPayloadWithIntegerValue()
@@ -202,7 +202,7 @@ class MessageTest extends TestCase
     public function testSetCategoryThrowsExceptionOnNonScalar()
     {
         $this->expectException(InvalidArgumentException::class);
-        $this->message->setCategory(array());
+        $this->message->setCategory([]);
     }
 
     public function testSetCategoryThrowsExceptionOnNonString()
@@ -213,14 +213,14 @@ class MessageTest extends TestCase
 
     public function testSetUrlArgsReturnsString()
     {
-        $urlArgs = array('path/to/somewhere');
+        $urlArgs = ['path/to/somewhere'];
         $this->message->setUrlArgs($urlArgs);
         $this->assertEquals($urlArgs, $this->message->getUrlArgs());
     }
 
     public function testSetCustomData()
     {
-        $data = array('key' => 'val', 'key2' => array(1, 2, 3, 4, 5));
+        $data = ['key' => 'val', 'key2' => [1, 2, 3, 4, 5]];
         $this->message->setCustom($data);
         $this->assertEquals($data, $this->message->getCustom());
     }
@@ -231,21 +231,21 @@ class MessageTest extends TestCase
             'Foo wants to play Bar!',
             'PLAY',
             'GAME_PLAY_REQUEST_FORMAT',
-            array('Foo', 'Baz'),
+            ['Foo', 'Baz'],
             'Default.png',
             'Alert',
             'ALERT',
-            array('Foo', 'Baz')
+            ['Foo', 'Baz']
         );
 
         $this->assertEquals('Foo wants to play Bar!', $alert->getBody());
         $this->assertEquals('PLAY', $alert->getActionLocKey());
         $this->assertEquals('GAME_PLAY_REQUEST_FORMAT', $alert->getLocKey());
-        $this->assertEquals(array('Foo', 'Baz'), $alert->getLocArgs());
+        $this->assertEquals(['Foo', 'Baz'], $alert->getLocArgs());
         $this->assertEquals('Default.png', $alert->getLaunchImage());
         $this->assertEquals('Alert', $alert->getTitle());
         $this->assertEquals('ALERT', $alert->getTitleLocKey());
-        $this->assertEquals(array('Foo', 'Baz'), $alert->getTitleLocArgs());
+        $this->assertEquals(['Foo', 'Baz'], $alert->getTitleLocArgs());
     }
 
     public function testAlertJsonPayload()
@@ -254,11 +254,11 @@ class MessageTest extends TestCase
             'Foo wants to play Bar!',
             'PLAY',
             'GAME_PLAY_REQUEST_FORMAT',
-            array('Foo', 'Baz'),
+            ['Foo', 'Baz'],
             'Default.png',
             'Alert',
             'ALERT',
-            array('Foo', 'Baz')
+            ['Foo', 'Baz']
         );
         $payload = $alert->getPayload();
 
@@ -288,30 +288,46 @@ class MessageTest extends TestCase
         $this->message->setExpire(100);
         $this->message->setToken('0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef');
         $payload = $this->message->getPayload();
-        $this->assertEquals($payload, array('aps' => array('alert' => 'hi=привет')));
+        $this->assertEquals($payload, ['aps' => ['alert' => 'hi=привет']]);
         if (defined('JSON_UNESCAPED_UNICODE')) {
             $payloadJson = json_encode($payload, JSON_UNESCAPED_UNICODE);
             $this->assertEquals($payloadJson, '{"aps":{"alert":"hi=привет"}}');
             $length = 35; // 23 + (2 * 6) because UTF-8 (Russian) "привет" contains 2 bytes per letter
-            $result = pack('CNNnH*', 1, $this->message->getId(), $this->message->getExpire(), 32, $this->message->getToken())
-            . pack('n', $length)
-            . $payloadJson;
+            $result =
+                pack(
+                    'CNNnH*',
+                    1,
+                    $this->message->getId(),
+                    $this->message->getExpire(),
+                    32,
+                    $this->message->getToken()
+                )
+                . pack('n', $length)
+                . $payloadJson;
             $this->assertEquals($this->message->getPayloadJson(), $result);
         } else {
             $payloadJson = JsonEncoder::encode($payload);
             $this->assertEquals($payloadJson, '{"aps":{"alert":"hi=\u043f\u0440\u0438\u0432\u0435\u0442"}}');
-            $length = 59; // (23 + (6 * 6) because UTF-8 (Russian) "привет" converts into 6 bytes per letter constructions
-            $result = pack('CNNnH*', 1, $this->message->getId(), $this->message->getExpire(), 32, $this->message->getToken())
-            . pack('n', $length)
-            . $payloadJson;
+            $length = 59; // (23 + (6 * 6) because UTF-8 (Russian) "привет" converts into 6 bytes/letter
+            $result =
+                pack(
+                    'CNNnH*',
+                    1,
+                    $this->message->getId(),
+                    $this->message->getExpire(),
+                    32,
+                    $this->message->getToken()
+                )
+                . pack('n', $length)
+                . $payloadJson;
             $this->assertEquals($this->message->getPayloadJson(), $result);
         }
     }
 
     public function testCustomDataPayloadIncludesEmptyApsObject()
     {
-        $data = array('custom' => 'data');
-        $expected = array_merge($data, array('aps' => (object) array()));
+        $data = ['custom' => 'data'];
+        $expected = array_merge($data, ['aps' => (object) []]);
         $this->message->setCustom($data);
 
         $payload = $this->message->getPayload();

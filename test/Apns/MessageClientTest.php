@@ -50,7 +50,7 @@ class MessageClientTest extends TestCase
     public function testSetCertificateThrowsExceptionOnNonString()
     {
         $this->expectException('InvalidArgumentException');
-        $this->apns->open(MessageClient::PRODUCTION_URI, array('foo'));
+        $this->apns->open(MessageClient::PRODUCTION_URI, ['foo']);
     }
 
     public function testSetCertificateThrowsExceptionOnMissingFile()
@@ -62,7 +62,7 @@ class MessageClientTest extends TestCase
     public function testSetCertificatePassphraseThrowsExceptionOnNonString()
     {
         $this->expectException('InvalidArgumentException');
-        $this->apns->open(MessageClient::PRODUCTION_URI, __DIR__ . '/TestAsset/certificate.pem', array('foo'));
+        $this->apns->open(MessageClient::PRODUCTION_URI, __DIR__ . '/TestAsset/certificate.pem', ['foo']);
     }
 
     public function testOpen()
