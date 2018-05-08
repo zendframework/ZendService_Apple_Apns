@@ -66,7 +66,7 @@ class Message
      */
     protected $category;
 
-    /** 
+    /**
      * URL Arguments
      * @var array|null
      */
@@ -129,7 +129,7 @@ class Message
             ));
         }
 
-        if (preg_match('/[^0-9a-fA-F]/', $token)) {
+        if (preg_match('/[^0-9a-f]/i', $token)) {
             throw new Exception\InvalidArgumentException(sprintf(
                     'Device token must be mask "%s". Token given: "%s"',
                     '/[^0-9a-f]/',
