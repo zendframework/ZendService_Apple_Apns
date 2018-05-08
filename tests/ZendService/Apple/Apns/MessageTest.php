@@ -10,9 +10,10 @@
 
 namespace ZendServiceTest\Apple\Apns\TestAsset;
 
+use stdClass;
+use Zend\Json\Encoder as JsonEncoder;
 use ZendService\Apple\Apns\Message;
 use ZendService\Apple\Apns\Message\Alert;
-use Zend\Json\Encoder as JsonEncoder;
 
 /**
  * @category   ZendService
@@ -63,13 +64,13 @@ class MessageTest extends \PHPUnit_Framework_TestCase
         $this->setExpectedException('InvalidArgumentException');
         $this->alert->setLaunchImage(array());
     }
-    
+
     public function testSetAlertThrowsExceptionOnTitleNonString()
     {
         $this->setExpectedException('InvalidArgumentException');
         $this->alert->setTitle(array());
     }
-    
+
     public function testSetAlertThrowsExceptionOnTitleLocKeyNonString()
     {
         $this->setExpectedException('InvalidArgumentException');
@@ -125,6 +126,50 @@ class MessageTest extends \PHPUnit_Framework_TestCase
     {
         $this->setExpectedException('InvalidArgumentException');
         $this->message->setSound(12345);
+    }
+
+    /**
+     * @dataProvider provideSetMutableContentThrowsExceptionOnNonIntegerOneOrNullData
+     *
+     * @param mixed $value
+     */
+    public function testSetMutableContentThrowsExceptionOnNonIntegerOneAndNull($value)
+    {
+        $this->setExpectedException('InvalidArgumentException');
+        $this->message->setMutableContent($value);
+    }
+
+    /**
+     * @return array
+     */
+    public function provideSetMutableContentThrowsExceptionOnNonIntegerOneOrNullData()
+    {
+        return array(
+            'unsupported positive integer' => array('value' => 2),
+            'zero integer'                 => array('value' => 0),
+            'negative integer'             => array('value' => -1),
+            'boolean'                      => array('value' => true),
+            'string'                       => array('value' => 'any string'),
+            'float'                        => array('value' => 123.12),
+            'array'                        => array('value' => array()),
+            'object'                       => array('value' => new stdClass()),
+        );
+    }
+
+    public function testSetMutableContentResultsInCorrectPayloadWithIntegerValue()
+    {
+        $value = 1;
+        $this->message->setMutableContent($value);
+        $payload = $this->message->getPayload();
+        $this->assertEquals($value, $payload['aps']['mutable-content']);
+    }
+
+    public function testSetMutableContentResultsInCorrectPayloadWithNullValue()
+    {
+        $this->message->setMutableContent(null);
+        $json = $this->message->getPayloadJson();
+        $payload = json_decode($json, true);
+        $this->assertFalse(isset($payload['aps']['mutable-content']));
     }
 
     public function testSetContentAvailableThrowsExceptionOnNonInteger()

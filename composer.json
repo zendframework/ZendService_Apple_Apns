@@ -9,7 +9,7 @@
         "notification",
         "apple"
     ],
-    "homepage": "http://packages.zendframework.com/",
+    "homepage": "https://packages.zendframework.com/",
     "license": "BSD-3-Clause",
     "autoload": {
         "psr-0": {
