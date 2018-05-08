@@ -11,17 +11,17 @@
 namespace ZendServiceTest\Apple\Apns\TestAsset;
 
 use ZendService\Apple\Apns\Exception;
-use ZendService\Apple\Apns\Client\Message as ZfMessageClient;
+use ZendService\Apple\Apns\Client\Feedback as ZfFeedbackClient;
 
 /**
- * Message Client Proxy
+ * Feedback Client Proxy
  * This class is utilized for unit testing purposes
  *
  * @category   ZendService
  * @package    ZendService_Apple
  * @subpackage Apns
  */
-class MessageClient extends ZfMessageClient
+class FeedbackClient extends ZfFeedbackClient
 {
     /**
      * Read Response
@@ -40,8 +40,8 @@ class MessageClient extends ZfMessageClient
     /**
      * Set the Response
      *
-     * @param  string        $str
-     * @return MessageClient
+     * @param  string         $str
+     * @return FeedbackClient
      */
     public function setReadResponse($str)
     {
@@ -53,8 +53,8 @@ class MessageClient extends ZfMessageClient
     /**
      * Set the write response
      *
-     * @param  mixed         $resp
-     * @return MessageClient
+     * @param  mixed          $resp
+     * @return FeedbackClient
      */
     public function setWriteResponse($resp)
     {
@@ -66,7 +66,7 @@ class MessageClient extends ZfMessageClient
     /**
      * Connect to Host
      *
-     * @return MessageClient
+     * @return FeedbackClient
      */
     protected function connect($host, array $ssl)
     {
@@ -81,7 +81,7 @@ class MessageClient extends ZfMessageClient
      */
     protected function read($length = 1024)
     {
-        if (!$this->isConnected()) {
+        if (! $this->isConnected()) {
             throw new Exception\RuntimeException('You must open the connection prior to reading data');
         }
         $ret = substr($this->readResponse, 0, $length);
@@ -98,7 +98,7 @@ class MessageClient extends ZfMessageClient
      */
     protected function write($payload)
     {
-        if (!$this->isConnected()) {
+        if (! $this->isConnected()) {
             throw new Exception\RuntimeException('You must open the connection prior to writing data');
         }
         $ret = $this->writeResponse;

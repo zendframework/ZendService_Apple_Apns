@@ -59,7 +59,7 @@ class Feedback
      */
     public function setToken($token)
     {
-        if (!is_scalar($token)) {
+        if (! is_scalar($token)) {
             throw new Exception\InvalidArgumentException('Token must be a scalar value');
         }
         $this->token = $token;

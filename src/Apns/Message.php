@@ -10,8 +10,8 @@
 
 namespace ZendService\Apple\Apns;
 
-use ZendService\Apple\Exception;
 use Zend\Json\Encoder as JsonEncoder;
+use ZendService\Apple\Exception;
 
 /**
  * APNs Message
@@ -55,6 +55,12 @@ class Message
     protected $sound;
 
     /**
+     * Mutable Content
+     * @var int|null
+     */
+    private $mutableContent;
+
+    /**
      * Content Available
      * @var int|null
      */
@@ -66,7 +72,7 @@ class Message
      */
     protected $category;
 
-    /** 
+    /**
      * URL Arguments
      * @var array|null
      */
@@ -96,7 +102,7 @@ class Message
      */
     public function setId($id)
     {
-        if (!is_scalar($id)) {
+        if (! is_scalar($id)) {
             throw new Exception\InvalidArgumentException('Identifier must be a scalar value');
         }
         $this->id = $id;
@@ -122,25 +128,25 @@ class Message
      */
     public function setToken($token)
     {
-        if (!is_string($token)) {
+        if (! is_string($token)) {
             throw new Exception\InvalidArgumentException(sprintf(
-                    'Device token must be a string, "%s" given.',
-                    gettype($token)
+                'Device token must be a string, "%s" given.',
+                gettype($token)
             ));
         }
 
-        if (preg_match('/[^0-9a-f]/', $token)) {
+        if (preg_match('/[^0-9a-f]/i', $token)) {
             throw new Exception\InvalidArgumentException(sprintf(
-                    'Device token must be mask "%s". Token given: "%s"',
-                    '/[^0-9a-f]/',
-                    $token
+                'Device token must be mask "%s". Token given: "%s"',
+                '/[^0-9a-f]/',
+                $token
             ));
         }
 
         if (strlen($token) != 64) {
             throw new Exception\InvalidArgumentException(sprintf(
-                    'Device token must be a 64 charsets, Token length given: %d.',
-                    mb_strlen($token)
+                'Device token must be a 64 charsets, Token length given: %d.',
+                mb_strlen($token)
             ));
         }
 
@@ -169,7 +175,7 @@ class Message
     {
         if ($expire instanceof \DateTime) {
             $expire = $expire->getTimestamp();
-        } elseif (!is_numeric($expire) || $expire != (int) $expire) {
+        } elseif (! is_numeric($expire) || $expire != (int) $expire) {
             throw new Exception\InvalidArgumentException('Expiration must be a DateTime object or a unix timestamp');
         }
         $this->expire = $expire;
@@ -195,7 +201,7 @@ class Message
      */
     public function setAlert($alert)
     {
-        if (!$alert instanceof Message\Alert && !is_null($alert)) {
+        if (! $alert instanceof Message\Alert && ! is_null($alert)) {
             $alert = new Message\Alert($alert);
         }
         $this->alert = $alert;
@@ -221,7 +227,7 @@ class Message
      */
     public function setBadge($badge)
     {
-        if ($badge !== null && !$badge == (int) $badge) {
+        if ($badge !== null && ! $badge == (int) $badge) {
             throw new Exception\InvalidArgumentException('Badge must be null or an integer');
         }
         $this->badge = $badge;
@@ -247,10 +253,33 @@ class Message
      */
     public function setSound($sound)
     {
-        if ($sound !== null && !is_string($sound)) {
+        if ($sound !== null && ! is_string($sound)) {
             throw new Exception\InvalidArgumentException('Sound must be null or a string');
         }
         $this->sound = $sound;
+
+        return $this;
+    }
+
+    /**
+     * Set Mutable Content
+     *
+     * @param int|null $value
+     * @returns Message
+     */
+    public function setMutableContent($value)
+    {
+        if ($value !== null && ! is_int($value)) {
+            throw new Exception\InvalidArgumentException(
+                'Mutable Content must be null or an integer, received: ' . gettype($value)
+            );
+        }
+
+        if (is_int($value) && $value !== 1) {
+            throw new Exception\InvalidArgumentException('Mutable Content supports only 1 as integer value');
+        }
+
+        $this->mutableContent = $value;
 
         return $this;
     }
@@ -268,12 +297,12 @@ class Message
     /**
      * Set Content Available
      *
-     * @param  int|null $sound
+     * @param  int|null $value
      * @return Message
      */
     public function setContentAvailable($value)
     {
-        if ($value !== null && !is_int($value)) {
+        if ($value !== null && ! is_int($value)) {
             throw new Exception\InvalidArgumentException('Content Available must be null or an integer');
         }
         $this->contentAvailable = $value;
@@ -299,7 +328,7 @@ class Message
      */
     public function setCategory($category)
     {
-        if ($category !== null && !is_string($category)) {
+        if ($category !== null && ! is_string($category)) {
             throw new Exception\InvalidArgumentException('Category must be null or a string');
         }
         $this->category = $category;
@@ -366,32 +395,34 @@ class Message
      */
     public function getPayload()
     {
-        $message = array();
-        $aps = array();
+        $message = [];
+        $aps = [];
         if ($this->alert && ($alert = $this->alert->getPayload())) {
             $aps['alert'] = $alert;
         }
-        if (!is_null($this->badge)) {
+        if (! is_null($this->badge)) {
             $aps['badge'] = $this->badge;
         }
-        if (!is_null($this->sound)) {
+        if (! is_null($this->sound)) {
             $aps['sound'] = $this->sound;
         }
-        if (!is_null($this->contentAvailable)) {
+        if (! is_null($this->mutableContent)) {
+            $aps['mutable-content'] = $this->mutableContent;
+        }
+        if (! is_null($this->contentAvailable)) {
             $aps['content-available'] = $this->contentAvailable;
         }
-        if (!is_null($this->category)) {
+        if (! is_null($this->category)) {
             $aps['category'] = $this->category;
         }
-        if (!is_null($this->urlArgs)) {
+        if (! is_null($this->urlArgs)) {
             $aps['url-args'] = $this->urlArgs;
         }
-        if (!empty($this->custom)) {
+        if (! empty($this->custom)) {
             $message = array_merge($this->custom, $message);
         }
-        if (!empty($aps)) {
-            $message['aps'] = $aps;
-        }
+
+        $message['aps'] = empty($aps) ? (object) [] : $aps;
 
         return $message;
     }

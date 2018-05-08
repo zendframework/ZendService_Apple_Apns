@@ -12,6 +12,7 @@
 
 namespace ZendServiceTest\Apple\Apns;
 
+use PHPUnit\Framework\TestCase;
 use ZendServiceTest\Apple\Apns\TestAsset\MessageClient;
 use ZendService\Apple\Apns\Message;
 use ZendService\Apple\Apns\Response\Message as MessageResponse;
@@ -24,7 +25,7 @@ use ZendService\Apple\Apns\Response\Message as MessageResponse;
  * @group      ZendService_Apple
  * @group      ZendService_Apple_Apns
  */
-class MessageClientTest extends \PHPUnit_Framework_TestCase
+class MessageClientTest extends TestCase
 {
     public function setUp()
     {
@@ -42,26 +43,26 @@ class MessageClientTest extends \PHPUnit_Framework_TestCase
 
     public function testConnectThrowsExceptionOnInvalidEnvironment()
     {
-        $this->setExpectedException('InvalidArgumentException');
+        $this->expectException('InvalidArgumentException');
         $this->apns->open(5, __DIR__ . '/TestAsset/certificate.pem');
     }
 
     public function testSetCertificateThrowsExceptionOnNonString()
     {
-        $this->setExpectedException('InvalidArgumentException');
-        $this->apns->open(MessageClient::PRODUCTION_URI, array('foo'));
+        $this->expectException('InvalidArgumentException');
+        $this->apns->open(MessageClient::PRODUCTION_URI, ['foo']);
     }
 
     public function testSetCertificateThrowsExceptionOnMissingFile()
     {
-        $this->setExpectedException('InvalidArgumentException');
+        $this->expectException('InvalidArgumentException');
         $this->apns->open(MessageClient::PRODUCTION_URI, 'foo');
     }
 
     public function testSetCertificatePassphraseThrowsExceptionOnNonString()
     {
-        $this->setExpectedException('InvalidArgumentException');
-        $this->apns->open(MessageClient::PRODUCTION_URI, __DIR__ . '/TestAsset/certificate.pem', array('foo'));
+        $this->expectException('InvalidArgumentException');
+        $this->apns->open(MessageClient::PRODUCTION_URI, __DIR__ . '/TestAsset/certificate.pem', ['foo']);
     }
 
     public function testOpen()
@@ -80,7 +81,7 @@ class MessageClientTest extends \PHPUnit_Framework_TestCase
 
     public function testOpenWhenAlreadyOpenThrowsException()
     {
-        $this->setExpectedException('RuntimeException');
+        $this->expectException('RuntimeException');
         $this->apns->open(MessageClient::SANDBOX_URI, __DIR__ . '/TestAsset/certificate.pem');
         $this->apns->open(MessageClient::SANDBOX_URI, __DIR__ . '/TestAsset/certificate.pem');
     }

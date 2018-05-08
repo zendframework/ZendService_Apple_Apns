@@ -107,7 +107,7 @@ class Message
      */
     public function setId($id)
     {
-        if (!is_scalar($id)) {
+        if (! is_scalar($id)) {
             throw new Exception\InvalidArgumentException('Identifier must be a scalar value');
         }
         $this->id = $id;
@@ -123,7 +123,7 @@ class Message
      */
     public function parseRawResponse($rawResponse)
     {
-        if (!is_scalar($rawResponse)) {
+        if (! is_scalar($rawResponse)) {
             throw new Exception\InvalidArgumentException('Response must be a scalar value');
         }
 

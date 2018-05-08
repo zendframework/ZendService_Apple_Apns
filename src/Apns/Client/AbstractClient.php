@@ -29,7 +29,7 @@ abstract class AbstractClient
      * APNS URIs
      * @var array
      */
-    protected $uris = array();
+    protected $uris = [];
 
     /**
      * Is Connected
@@ -59,19 +59,19 @@ abstract class AbstractClient
             throw new Exception\RuntimeException('Connection has already been opened and must be closed');
         }
 
-        if (!array_key_exists($environment, $this->uris)) {
+        if (! array_key_exists($environment, $this->uris)) {
             throw new Exception\InvalidArgumentException('Environment must be one of PRODUCTION_URI or SANDBOX_URI');
         }
 
-        if (!is_string($certificate) || !file_exists($certificate)) {
+        if (! is_string($certificate) || ! file_exists($certificate)) {
             throw new Exception\InvalidArgumentException('Certificate must be a valid path to a APNS certificate');
         }
 
-        $sslOptions = array(
+        $sslOptions = [
             'local_cert' => $certificate,
-        );
+        ];
         if ($passPhrase !== null) {
-            if (!is_scalar($passPhrase)) {
+            if (! is_scalar($passPhrase)) {
                 throw new Exception\InvalidArgumentException('SSL passphrase must be a scalar');
             }
             $sslOptions['passphrase'] = $passPhrase;
@@ -103,12 +103,13 @@ abstract class AbstractClient
                 ini_get('default_socket_timeout'),
                 STREAM_CLIENT_CONNECT,
                 stream_context_create(
-                    array(
+                    [
                         'ssl' => $ssl,
-                    )
+                    ]
                 )
             );
         } catch (StreamSocketClientException $e) {
+            restore_error_handler();
             throw new Exception\RuntimeException(sprintf(
                 'Unable to connect: %s: %d (%s)',
                 $host,
@@ -119,7 +120,7 @@ abstract class AbstractClient
 
         restore_error_handler();
 
-        if (!$this->socket) {
+        if (! $this->socket) {
             throw new Exception\RuntimeException(sprintf(
                 'Unable to connect: %s: %d (%s)',
                 $host,
@@ -166,11 +167,11 @@ abstract class AbstractClient
      */
     protected function read($length = 6)
     {
-        if (!$this->isConnected()) {
+        if (! $this->isConnected()) {
             throw new Exception\RuntimeException('You must open the connection prior to reading data');
         }
         $data = false;
-        $read = array($this->socket);
+        $read = [$this->socket];
         $null = null;
 
         if (0 < @stream_select($read, $null, $null, 1, 0)) {
@@ -188,7 +189,7 @@ abstract class AbstractClient
      */
     protected function write($payload)
     {
-        if (!$this->isConnected()) {
+        if (! $this->isConnected()) {
             throw new Exception\RuntimeException('You must open the connection prior to writing data');
         }
 
