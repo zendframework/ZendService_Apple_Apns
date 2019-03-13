@@ -2,7 +2,7 @@
 
 All notable changes to this project will be documented in this file, in reverse chronological order by release.
 
-## 1.3.2 - TBD
+## 1.4.0 - 2019-03-13
 
 ### Added
 
@@ -10,7 +10,8 @@ All notable changes to this project will be documented in this file, in reverse 
 
 ### Changed
 
-- Nothing.
+- [#65](https://github.com/zendframework/ZendService_Apple_Apns/pull/65) changes the URI schemes used to push messages from `tls` to `tlsv1.2` due
+  to a change in TLS versions supported by the endpoints.
 
 ### Deprecated
 
