@@ -2,7 +2,7 @@
 
 All notable changes to this project will be documented in this file, in reverse chronological order by release.
 
-## 1.4.1 - TBD
+## 1.4.1 - 2019-03-14
 
 ### Added
 
@@ -22,7 +22,8 @@ All notable changes to this project will be documented in this file, in reverse 
 
 ### Fixed
 
-- Nothing.
+- [#66](https://github.com/zendframework/ZendService_Apple_Apns/pull/66) fixes the schemes used for feedback notification URLs, to ensure they
+  reference `tlsv1.2` specifically.
 
 ## 1.4.0 - 2019-03-13
 
