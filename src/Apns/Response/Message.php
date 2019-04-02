@@ -83,10 +83,10 @@ class Message
      */
     public function setCode($code)
     {
-		if (($code < 0 || $code > 8) && $code != 10 && $code != 255) {
-			throw new Exception\InvalidArgumentException('Code must be between 0-8, 10 OR 255');
-		}
-        
+        if (($code < 0 || $code > 8) && $code != 10 && $code != 255) {
+            throw new Exception\InvalidArgumentException('Code must be between 0-8, 10 OR 255');
+        }
+
 
         $this->code = $code;
 
