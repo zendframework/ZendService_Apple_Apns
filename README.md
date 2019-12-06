@@ -1,6 +1,10 @@
 ZendService\Apple\Apns [![Build Status](https://travis-ci.org/zendframework/ZendService_Apple_Apns.png?branch=master)](https://travis-ci.org/zendframework/ZendService_Apple_Apns)
 ================================
 
+> ## Repository abandoned 2019-12-05
+>
+> This repository is no longer maintained.
+
 Provides support for Apple push notifications.
 
 
@@ -19,4 +23,3 @@ $ composer require zendframework/zendservice-apple-apns
 ## Documentation
 
 The documentation can be found at: http://framework.zend.com/manual/current/en/modules/zendservice.apple.apns.html
-
