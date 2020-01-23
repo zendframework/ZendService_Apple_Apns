@@ -36,6 +36,8 @@ class Message
     const RESULT_INVALID_TOPIC_SIZE = 6;
     const RESULT_INVALID_PAYLOAD_SIZE = 7;
     const RESULT_INVALID_TOKEN = 8;
+    const RESULT_INVALID_SHUTDOWN = 10;
+
     const RESULT_UNKNOWN_ERROR = 255;
 
     /**
@@ -81,9 +83,11 @@ class Message
      */
     public function setCode($code)
     {
-        if (($code < 0 || $code > 8) && $code != 255) {
-            throw new Exception\InvalidArgumentException('Code must be between 0-8 OR 255');
+        if (($code < 0 || $code > 8) && $code != 10 && $code != 255) {
+            throw new Exception\InvalidArgumentException('Code must be between 0-8, 10 OR 255');
         }
+
+
         $this->code = $code;
 
         return $this;
